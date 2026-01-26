@@ -26,24 +26,29 @@ body {
   color: #0b1727;
   background: #fff;
   line-height: 1.5;
+  overflow-x: hidden; /* ✅ prevents 100vw/negative-margin horizontal scroll */
 }
 
-a {
-  color: inherit;
+a { color: inherit; }
+
+/* =========================================
+   VARIABLES
+========================================= */
+:root {
+  --topbar-h: 44px;
+  --nav-h: 76px;
+
+  --purple: #5B2D8B;
+  --purple2: #4A2372;          /* ✅ define this (you used it on hover) */
+  --purpleLight: #E9D8FD;
+
+  --dark: #0b1727;
+  --textLight: #ffffff;
 }
 
 /* =========================================
    TOP BAR
 ========================================= */
-:root {
-  --topbar-h: 44px;
-  --nav-h: 72px;
-  --purple: #5B2D8B;
-  --purpleLight: #E9D8FD;
-  --dark: #0b1727;
-  --textLight: #ffffff;
-}
-
 .top-bar {
   height: var(--topbar-h);
   display: flex;
@@ -99,14 +104,11 @@ a {
   border-bottom: 1px solid rgba(255, 255, 255, 0.18);
 
   position: sticky;
-  top: var(--topbar-h); /* sticks under top bar */
+  top: var(--topbar-h);
   z-index: 9990;
 }
 
-.nav-left {
-  display: flex;
-  align-items: center;
-}
+.nav-left { display: flex; align-items: center; }
 
 /* Logo + text wrapper */
 .logo-wrap {
@@ -120,18 +122,17 @@ a {
   font-size: 18px;
   font-weight: 900;
   letter-spacing: 0.4px;
-  color: #fff; /* matches your purple navbar */
+  color: #fff;
   line-height: 1;
   white-space: nowrap;
 }
 
 .logo-img {
-  height: 81px;     
+  height: 64px; /* ✅ keep within nav height so it doesn’t push layout */
   width: auto;
   display: block;
   object-fit: contain;
-  margin-top: 1px;
-
+  margin-top: 0;
 }
 
 .nav-center {
@@ -142,7 +143,6 @@ a {
 
 /* =========================================
    WORDPRESS MENU (Animated)
-   Works with: link_before => <span class="hover-span"></span>
 ========================================= */
 .menu {
   list-style: none;
@@ -158,7 +158,6 @@ a {
   overflow: hidden;
 }
 
-/* The diagonal sweep highlight span inserted via link_before */
 .menu li .hover-span {
   position: absolute;
   width: 140px;
@@ -172,7 +171,6 @@ a {
   pointer-events: none;
 }
 
-/* Menu links */
 .menu li a {
   position: relative;
   display: inline-block;
@@ -183,7 +181,6 @@ a {
   letter-spacing: 0.2px;
 }
 
-/* Top & bottom line animation */
 .menu li a::before,
 .menu li a::after {
   content: "";
@@ -196,39 +193,20 @@ a {
   transition: transform 400ms cubic-bezier(0.57, 0.07, 0, 0.98);
 }
 
-.menu li a::before {
-  top: 0;
-  transform-origin: left;
-}
+.menu li a::before { top: 0; transform-origin: left; }
+.menu li a::after  { bottom: 0; transform-origin: right; }
 
-.menu li a::after {
-  bottom: 0;
-  transform-origin: right;
-}
-
-/* Hover effects */
-.menu li:hover .hover-span {
-  left: 120px;
-  opacity: 1;
-}
-
+.menu li:hover .hover-span { left: 120px; opacity: 1; }
 .menu li:hover a::before,
-.menu li:hover a::after {
-  transform: scaleX(1);
-}
+.menu li:hover a::after { transform: scaleX(1); }
 
-/* Current page styling (WordPress adds current-menu-item) */
 .menu .current-menu-item > a,
-.menu .current_page_item > a {
-  color: #fff;
-}
+.menu .current_page_item > a { color: #fff; }
 
 .menu .current-menu-item > a::before,
 .menu .current-menu-item > a::after,
 .menu .current_page_item > a::before,
-.menu .current_page_item > a::after {
-  transform: scaleX(1);
-}
+.menu .current_page_item > a::after { transform: scaleX(1); }
 
 /* =========================================
    NAV RIGHT BUTTON (Get Started)
@@ -238,13 +216,16 @@ a {
   align-items: center;
 }
 
-/* Ensure SVG never renders huge */
 .btn3 svg {
   width: 18px;
   height: 18px;
   display: block;
   flex: 0 0 auto;
-  fill: currentColor;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2.4;
+  stroke-linecap: round;
+  stroke-linejoin: round;
 }
 
 .btn3 {
@@ -266,10 +247,7 @@ a {
   box-shadow: 0 10px 25px rgba(0,0,0,0.10);
 }
 
-.btn3 .text {
-  position: relative;
-  z-index: 2;
-}
+.btn3 .text { position: relative; z-index: 2; }
 
 .btn3 .circle {
   position: absolute;
@@ -298,43 +276,177 @@ a {
   box-shadow: 0 14px 30px rgba(0,0,0,0.18);
 }
 
-.btn3:hover .circle {
-  transform: translateX(0);
+.btn3:hover .circle { transform: translateX(0); }
+.btn3:hover .arr-1  { transform: translateX(6px); opacity: 0; }
+.btn3:hover .arr-2  { opacity: 1; transform: translateX(0); }
+
+/* =========================================
+   BTN3 – HERO VARIANTS (Slider Buttons)
+   ✅ ONLY change for slider buttons
+========================================= */
+.btn3--hero {
+  padding: 16px 28px;
+  font-size: 16px;
+  border-width: 3px;
+  box-shadow: 0 18px 40px rgba(0,0,0,0.35);
 }
 
-.btn3:hover .arr-1 {
-  transform: translateX(6px);
+.btn3--hero:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 24px 52px rgba(0,0,0,0.45);
+}
+
+/* Primary hero button */
+.btn3--hero:not(.btn3--ghost) {
+  background: rgba(91, 45, 139, 0.85);
+  border-color: rgba(255,255,255,0.35);
+}
+
+/* Ghost hero button */
+.btn3--ghost {
+  background: rgba(255,255,255,0.12);
+  border-color: rgba(255,255,255,0.45);
+}
+
+.btn3--ghost:hover {
+  background: rgba(255,255,255,0.22);
+}
+
+/* Make circle animation more visible on hero */
+.btn3--hero .circle {
+  background: rgba(233, 216, 253, 0.28);
+}
+
+/* =========================================
+   HERO SLIDER (FIT FLUSH UNDER NAVBAR)
+========================================= */
+.home main,
+.front-page main {
+  padding: 0; /* slider touches navbar (no extra padding) */
+}
+
+/* If your theme wraps content in a container, force full-bleed cleanly */
+.al-slider {
+  position: relative;
+  width: 100%;
+  max-width: 100%;
+  height: clamp(520px, 80vh, 720px);
+  overflow: hidden;
+
+  margin: 0;       /* ✅ no gap */
+  padding: 0;
+}
+
+.al-slider-track {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.al-slide {
+  position: absolute;
+  inset: 0;
+  background-image: var(--bg);
+  background-size: cover;
+  background-position: center;
   opacity: 0;
+  transform: scale(1.05);
+  transition: opacity 900ms ease, transform 1200ms ease;
+  display: flex;
+  align-items: center;
 }
 
-.btn3:hover .arr-2 {
+.al-slide.is-active {
   opacity: 1;
-  transform: translateX(0);
+  transform: scale(1);
+  z-index: 2;
 }
 
-/* =========================================
-   PAGE CONTENT
-========================================= */
-main {
-  padding: 24px;
+.al-slide-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, rgba(11,23,39,0.75), rgba(11,23,39,0.25));
 }
 
-article {
-  margin: 24px 0;
+.al-slide-content {
+  position: relative;
+  z-index: 3;
+  width: min(1100px, 92%);
+  margin: 0 auto;
+  padding: 40px 0;
+  color: #fff;
 }
 
-h1, h2, h3 {
-  margin: 0 0 12px;
+.al-slide-content h1 {
+  font-size: clamp(32px, 4.5vw, 60px);
+  margin-bottom: 14px;
+  font-weight: 900;
 }
 
-/* =========================================
-   FOOTER (optional if you have footer.php)
-========================================= */
-footer {
-  padding: 18px 24px;
-  border-top: 1px solid rgba(0,0,0,0.08);
-  color: rgba(11,23,39,0.85);
+.al-slide-content p {
+  font-size: clamp(16px, 1.6vw, 20px);
+  max-width: 58ch;
+  margin-bottom: 28px;
+  opacity: 0.95;
 }
+
+.al-slide-actions {
+  display: flex;
+  gap: 22px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+/* Prev/Next */
+.al-slider-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 46px;
+  height: 46px;
+  border-radius: 999px;
+  border: 1px solid rgba(255,255,255,0.35);
+  background: rgba(11,23,39,0.35);
+  color: #fff;
+  font-size: 28px;
+  line-height: 1;
+  cursor: pointer;
+  z-index: 5;
+}
+
+.al-slider-btn:hover { background: rgba(11,23,39,0.52); }
+.al-slider-btn.prev { left: 16px; }
+.al-slider-btn.next { right: 16px; }
+
+/* Dots */
+.al-slider-dots {
+  position: absolute;
+  left: 50%;
+  bottom: 16px;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 10px;
+  z-index: 6;
+}
+
+.al-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 999px;
+  border: 2px solid rgba(255,255,255,0.7);
+  background: transparent;
+  cursor: pointer;
+  opacity: 0.85;
+}
+
+.al-dot.is-active {
+  background: var(--purpleLight);
+  border-color: var(--purpleLight);
+  opacity: 1;
+}
+
+/* Optional content section below hero can have padding */
+.al-home-content { padding: 24px; }
 
 /* =========================================
    RESPONSIVE
@@ -350,7 +462,7 @@ footer {
     padding: 14px;
     flex-wrap: wrap;
     gap: 12px;
-    top: 0; /* on mobile, keep simple */
+    top: 0;
   }
 
   .nav-center {
@@ -364,7 +476,20 @@ footer {
     gap: 12px;
   }
 
-  .menu li a {
-    padding: 10px 14px;
+  .menu li a { padding: 10px 14px; }
+  .logo-img { height: 56px; }
+}
+
+@media (max-width: 720px) {
+  .al-slider { height: 480px; }
+  .al-slide-content { padding: 28px 0; }
+
+  /* Hero buttons on mobile */
+  .btn3--hero {
+    padding: 14px 22px;
+    font-size: 15px;
   }
+
+  .al-slider-btn.prev { left: 10px; }
+  .al-slider-btn.next { right: 10px; }
 }
