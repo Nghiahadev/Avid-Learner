@@ -1,6 +1,6 @@
 <?php
 /**
- * Theme functions for Avid Learner
+ * Theme functions for Avid Learner Design by Nghia Ha
  */
 
 function avid_learner_enqueue_assets() {
@@ -21,6 +21,16 @@ function avid_learner_enqueue_assets() {
     wp_get_theme()->get('Version'),
     true
   );
+
+  // wp-content/themes/avid-learner/assets/js/tabs.js
+    wp_enqueue_script(
+    'avid-learner-tabs',
+    get_template_directory_uri() . '/assets/js/tabs.js',
+    [],
+    wp_get_theme()->get('Version'),
+    true
+  );
+
 }
 add_action('wp_enqueue_scripts', 'avid_learner_enqueue_assets');
 

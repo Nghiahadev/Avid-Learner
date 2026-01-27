@@ -26,7 +26,7 @@ body {
   color: #0b1727;
   background: #fff;
   line-height: 1.5;
-  overflow-x: hidden; /* ✅ prevents 100vw/negative-margin horizontal scroll */
+  overflow-x: hidden; 
 }
 
 a { color: inherit; }
@@ -397,26 +397,7 @@ a { color: inherit; }
   align-items: center;
 }
 
-/* Prev/Next */
-.al-slider-btn {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 46px;
-  height: 46px;
-  border-radius: 999px;
-  border: 1px solid rgba(255,255,255,0.35);
-  background: rgba(11,23,39,0.35);
-  color: #fff;
-  font-size: 28px;
-  line-height: 1;
-  cursor: pointer;
-  z-index: 5;
-}
 
-.al-slider-btn:hover { background: rgba(11,23,39,0.52); }
-.al-slider-btn.prev { left: 16px; }
-.al-slider-btn.next { right: 16px; }
 
 /* Dots */
 .al-slider-dots {
@@ -492,4 +473,395 @@ a { color: inherit; }
 
   .al-slider-btn.prev { left: 10px; }
   .al-slider-btn.next { right: 10px; }
+}
+
+/* ===========================
+   Announcement / Notice Bar
+=========================== */
+.al-notice-bar {
+  width: 100%;
+  background: var(--purple);
+  color: #fff;
+  overflow: hidden;
+  border-top: 1px solid rgba(255,255,255,0.15);
+  border-bottom: 1px solid rgba(255,255,255,0.15);
+}
+
+.al-notice-track {
+  display: flex;
+  width: 100%;
+  white-space: nowrap;
+}
+
+.al-notice-row {
+  display: inline-flex;
+  align-items: center;
+  gap: 34px;
+  padding: 16px 0;
+  animation: alNoticeScroll 22s linear infinite;
+}
+
+.al-notice-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  font-weight: 700;
+  font-size: 28px;
+  letter-spacing: 0.2px;
+}
+
+.al-notice-sep {
+  font-size: 32px;
+  font-weight: 800;
+  opacity: 0.95;
+  transform: translateY(-1px);
+}
+
+.al-notice-text {
+  display: inline-block;
+}
+
+/* Smooth infinite motion */
+@keyframes alNoticeScroll {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-100%); }
+}
+
+/* Pause on hover (nice UX) */
+.al-notice-bar:hover .al-notice-row {
+  animation-play-state: paused;
+}
+
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .al-notice-row { animation: none; }
+}
+
+/* Responsive sizing */
+@media (max-width: 768px) {
+  .al-notice-item { font-size: 18px; }
+  .al-notice-sep  { font-size: 22px; }
+  .al-notice-row  { gap: 22px; padding: 12px 0; }
+}
+
+/* ===========================
+   WHAT WE DO (Consulting)
+=========================== */
+
+.al-container{
+  width: min(1200px, 92%);
+  margin: 0 auto;
+}
+
+.al-whatwedo{
+  padding: 90px 0;
+  background: #fff;
+}
+
+.al-whatwedo-grid{
+  display: grid;
+  grid-template-columns: 1.05fr 1fr;
+  gap: 64px;
+  align-items: center;
+}
+
+/* LEFT COLLAGE */
+.al-whatwedo-media{
+  position: relative;
+  min-height: 520px;
+}
+
+.al-whatwedo-photo{
+  border-radius: 26px;
+  overflow: hidden;
+  box-shadow: 0 24px 60px rgba(14, 18, 40, 0.14);
+}
+
+.al-whatwedo-photo img{
+  width: 100%;
+  height: 360px;
+  object-fit: cover;
+  display: block;
+}
+
+/* Award card */
+.al-whatwedo-card{
+  position: absolute;
+  right: 8%;
+  bottom: 10%;
+  width: min(360px, 88%);
+  background: #fff;
+  border-radius: 22px;
+  padding: 22px 22px 18px;
+  box-shadow: 0 20px 50px rgba(14, 18, 40, 0.12);
+  border: 1px solid rgba(20, 20, 30, 0.06);
+}
+
+.al-whatwedo-card h4{
+  margin: 12px 0 4px;
+  font-size: 18px;
+  color: #121526;
+}
+
+.al-whatwedo-card p{
+  margin: 0;
+  opacity: 0.7;
+  font-size: 14px;
+}
+
+.al-award-logo{
+  width: 64px;
+  height: 64px;
+  border-radius: 18px;
+  display: grid;
+  place-items: center;
+  background: radial-gradient(circle at top left, rgba(107,76,230,0.25), rgba(47,99,255,0.10));
+  border: 1px solid rgba(107,76,230,0.25);
+}
+
+.al-award-laurel{
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  border: 2px solid rgba(15, 18, 30, 0.20);
+  position: relative;
+}
+.al-award-laurel::before,
+.al-award-laurel::after{
+  content:"";
+  position:absolute;
+  inset: 6px;
+  border-radius: 50%;
+  border: 2px dashed rgba(15, 18, 30, 0.26);
+}
+
+/* Circle ring badge */
+.al-exp-circle{
+  position: absolute;
+  left: -22px;
+  bottom: 28px;
+  width: 160px;
+  height: 160px;
+  overflow: visible;
+  z-index: 2;
+}
+
+.al-exp-svg{
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.al-exp-spin{
+  transform-origin: 100px 100px;
+}
+
+@media (prefers-reduced-motion: no-preference){
+  .al-exp-spin{
+    animation: alExpSpin 18s linear infinite;
+  }
+}
+
+@keyframes alExpSpin{
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+
+
+/* RIGHT CONTENT */
+.al-eyebrow{
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 800;
+  color: #121526;
+  opacity: 0.9;
+  margin-bottom: 14px;
+}
+
+.al-dot{
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #6b4ce6;
+  display: inline-block;
+}
+
+.al-whatwedo-content h2{
+  font-size: clamp(34px, 4vw, 46px);
+  line-height: 1.08;
+  margin: 0 0 14px;
+  color: #121526;
+}
+
+.al-lead{
+  margin: 0 0 18px;
+  font-size: 16px;
+  line-height: 1.8;
+  opacity: 0.75;
+  max-width: 58ch;
+}
+
+/* Tabs */
+.al-tabs{
+  display: flex;
+  gap: 12px;
+  background: rgba(20, 20, 30, 0.04);
+  padding: 10px;
+  border-radius: 16px;
+  width: fit-content;
+  margin: 18px 0 14px;
+}
+
+.al-tab{
+  border: 0;
+  background: transparent;
+  padding: 14px 18px;
+  border-radius: 14px;
+  font-weight: 900;
+  cursor: pointer;
+  color: #121526;
+  opacity: 0.9;
+  transition: transform .18s ease, box-shadow .18s ease, background .18s ease;
+}
+
+.al-tab:hover{
+  transform: translateY(-1px);
+}
+
+.al-tab.is-active{
+  background: #fff;
+  box-shadow: 0 12px 26px rgba(14, 18, 40, 0.10);
+}
+
+.al-tab-text{
+  margin: 0 0 22px;
+  opacity: 0.72;
+  line-height: 1.8;
+  max-width: 62ch;
+}
+
+/* Tab panel animation */
+.al-tab-panel{
+  animation: alTabFade .22s ease;
+}
+@keyframes alTabFade{
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Feature rows */
+.al-features{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px;
+  padding-top: 8px;
+  border-top: 1px solid rgba(0,0,0,0.08);
+  margin-top: 10px;
+}
+
+.al-feature{
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+  padding-top: 16px;
+}
+
+.al-feature-ico{
+  width: 52px;
+  height: 52px;
+  border-radius: 16px;
+  display: grid;
+  place-items: center;
+  background: rgba(107,76,230,0.14);
+  border: 1px solid rgba(107,76,230,0.22);
+  font-size: 22px;
+  flex: 0 0 auto;
+}
+
+.al-feature h5{
+  margin: 0 0 4px;
+  font-size: 16px;
+  color: #121526;
+}
+.al-feature p{
+  margin: 0;
+  opacity: 0.7;
+  line-height: 1.6;
+  font-size: 14px;
+}
+
+/* CTA row */
+.al-cta-row{
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  margin-top: 22px;
+  flex-wrap: wrap;
+}
+
+.al-btn-pill{
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 14px 22px;
+  border-radius: 999px;
+  font-weight: 900;
+  text-decoration: none;
+  color: #fff;
+  background: linear-gradient(90deg, #6b4ce6, #2f63ff);
+  box-shadow: 0 18px 38px rgba(47, 99, 255, 0.22);
+  transition: transform .18s ease, box-shadow .18s ease;
+}
+
+.al-btn-pill:hover{
+  transform: translateY(-2px);
+  box-shadow: 0 22px 48px rgba(47, 99, 255, 0.28);
+}
+
+.al-call{
+  display: inline-flex;
+  gap: 12px;
+  align-items: center;
+  text-decoration: none;
+  color: #121526;
+}
+
+.al-call-ico{
+  width: 50px;
+  height: 50px;
+  border-radius: 16px;
+  display: grid;
+  place-items: center;
+  background: rgba(15, 18, 30, 0.04);
+  border: 1px solid rgba(0,0,0,0.08);
+  font-size: 22px;
+}
+
+.al-call small{
+  opacity: 0.7;
+}
+
+/* Responsive */
+@media (max-width: 980px){
+  .al-whatwedo-grid{
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+  .al-whatwedo-media{
+    min-height: 420px;
+  }
+  .al-whatwedo-photo img{
+    height: 320px;
+  }
+  .al-exp-circle{
+    left: -10px;
+    bottom: 18px;
+    width: 140px;
+    height: 140px;
+  }
+  .al-features{
+    grid-template-columns: 1fr;
+  }
 }

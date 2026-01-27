@@ -143,15 +143,9 @@
     </div>
   </section>
 
-  <!-- Your normal loop content below (optional) -->
-  <section style="padding:24px;">
-    <?php if ( have_posts() ) : while ( have_posts() ) : the_post(); ?>
-      <article style="margin: 24px 0;">
-        <h2><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h2>
-        <div><?php the_excerpt(); ?></div>
-      </article>
-    <?php endwhile; endif; ?>
-  </section>
+    <!-- NOTICE BAR BELOW SLIDER -->
+  <?php get_template_part('notice-bar'); ?>
+  
 
 </main>
 
