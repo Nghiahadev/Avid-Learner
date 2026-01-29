@@ -18,8 +18,8 @@
 <!-- TOP BAR -->
 <div class="top-bar">
   <div class="top-left">
-    <span>📞 +1 (234) 567-890</span>
-    <span>✉️ info@company.com</span>
+    <span>📍 Philadelphia, PA, US</span>
+    <span>✉️ info@avidlearner.com</span>
   </div>
 
   <div class="top-right">

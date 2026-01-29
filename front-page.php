@@ -151,7 +151,7 @@ get_header();
       <!-- RIGHT -->
       <div class="approach-visual">
         <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" aria-label="Decorative blob image">
-          <image href="https://images.unsplash.com/photo-1488161628813-04466f872be2?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=764&q=80"
+          <image href="https://steelblue-narwhal-734439.hostingersite.com/wp-content/uploads/2026/01/working-group-huddled-around-and-pointing-at-shared-laptop-scaled.jpg"
                 width="200" height="200"
                 preserveAspectRatio="xMidYMid slice"
                 clip-path="url(#blobClip)"/>
@@ -185,8 +185,16 @@ get_header();
     </div>
   </section>
 
+  <!-- =====================================================
+       WHY CHOOSE US (Template Part)
+  ====================================================== -->
 
     <?php get_template_part('why-choose-us'); ?>
+
+    <?php get_template_part('what-we-do'); ?>
+
+
+    <?php get_template_part('cta'); ?>
 
   <!-- =====================================================
        ELEMENTOR EDITABLE AREA

@@ -898,3 +898,285 @@ h1,h2,h3,h4,h5,h6{
 .al-stat-label {
   opacity: 0.7;
 }
+
+/* ==========================
+   CTA Section (WordPress)
+========================== */
+.al-cta{
+  position: relative;
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  overflow: hidden;
+  padding: 100px 20px;
+  min-height: 80vh;
+  display: flex;
+  align-items: center;
+}
+
+.al-cta-overlay{
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(0deg, rgba(1, 31, 68, 0.60), rgba(1, 31, 68, 0.60));
+  transition: background 0.3s, opacity 0.3s;
+  z-index: 1;
+}
+
+.al-cta-inner{
+  position: relative;
+  z-index: 2;
+}
+
+.al-cta-content{
+  max-width: 900px;
+  margin: 0 auto;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 18px;
+  color: #fff;
+}
+
+.al-cta-kicker{
+  color: #ffd700;
+  font-weight: 600;
+  letter-spacing: 1px;
+  margin: 0;
+  text-transform: uppercase;
+  font-size: 14px;
+}
+
+.al-cta-title{
+  font-size: 3.5rem;
+  font-weight: 800;
+  line-height: 1.25;
+  margin: 0;
+}
+
+.al-cta-desc{
+  font-size: 1.25rem;
+  font-weight: 400;
+  line-height: 1.7;
+  max-width: 800px;
+  margin: 0 auto;
+  color: rgba(255,255,255,0.90);
+}
+
+/* Button */
+.al-cta-btn-wrap{
+  padding-top: 30px;
+}
+
+.al-cta-btn{
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 28px;
+  border-radius: 999px;
+  border: 2px solid rgba(255,255,255,0.35);
+  color: #fff;
+  text-decoration: none;
+  font-weight: 700;
+  letter-spacing: 1px;
+  overflow: hidden;
+  transition: transform .25s ease, border-color .25s ease, background .25s ease;
+}
+
+.al-cta-btn:hover{
+  transform: translateY(-2px);
+  border-color: rgba(255,255,255,0.65);
+  background: rgba(255,255,255,0.08);
+}
+
+.al-cta-btn-dot{
+  width: 10px;
+  height: 10px;
+  border-radius: 999px;
+  background: #ffd700;
+  box-shadow: 0 0 0 6px rgba(255, 215, 0, 0.15);
+}
+
+/* Responsive */
+@media (max-width: 1024px){
+  .al-cta{
+    padding: 80px 20px;
+    min-height: 70vh;
+    background-attachment: scroll; /* better on mobile */
+  }
+  .al-cta-title{ font-size: 2.5rem; }
+  .al-cta-desc{ font-size: 1.1rem; }
+}
+
+@media (max-width: 768px){
+  .al-cta{
+    padding: 60px 20px;
+    min-height: 60vh;
+  }
+  .al-cta-title{ font-size: 2rem; }
+  .al-cta-desc{ font-size: 1rem; }
+}
+
+@media (max-width: 480px){
+  .al-cta{
+    padding: 40px 16px;
+    min-height: 50vh;
+  }
+  .al-cta-title{ font-size: 1.5rem; }
+  .al-cta-btn{ padding: 12px 22px; }
+}
+
+/* =========================================
+   WHAT WE DO (Screenshot style)
+========================================= */
+.al-wedo2{
+  position: relative;
+  padding: 110px 20px;
+  background: #f7f8fc;
+  overflow: hidden;
+}
+
+.al-wedo2-container{
+  width: min(1200px, calc(100% - 40px));
+  margin: 0 auto;
+  position: relative;
+  z-index: 2;
+}
+
+.al-wedo2-dots{
+  position:absolute;
+  inset:0;
+  background-image: radial-gradient(rgba(110, 120, 255, 0.14) 1px, transparent 1px);
+  background-size: 24px 24px;
+  opacity: .55;
+  pointer-events: none;
+}
+
+.al-wedo2-head{
+  text-align: center;
+  max-width: 900px;
+  margin: 0 auto 64px;
+}
+
+.al-wedo2-badge{
+  display: inline-block;
+  padding: 10px 18px;
+  border-radius: 999px;
+  background: rgba(86, 99, 255, 0.10);
+  color: #4f5dff;
+  border: 1px solid rgba(86, 99, 255, 0.18);
+  font-weight: 700;
+  font-size: 14px;
+  margin-bottom: 18px;
+}
+
+.al-wedo2-title{
+  margin: 0 0 14px;
+  font-size: clamp(34px, 4vw, 56px);
+  line-height: 1.08;
+  font-weight: 900;
+  color: #0b1727;
+  letter-spacing: -0.5px;
+}
+
+.al-wedo-gradient{
+  background: linear-gradient(135deg, #4f5dff 0%, #8b5cf6 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.al-wedo2-desc{
+  margin: 0 auto;
+  max-width: 760px;
+  color: rgba(11, 23, 39, 0.62);
+  font-size: 18px;
+  line-height: 1.7;
+}
+
+/* Grid */
+.al-wedo2-grid{
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 22px;
+}
+
+@media (max-width: 1100px){
+  .al-wedo2-grid{ grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 650px){
+  .al-wedo2-grid{ grid-template-columns: 1fr; }
+}
+
+/* Cards */
+.al-wedo2-card{
+  background: rgba(255,255,255,0.90);
+  border: 1px solid rgba(11, 23, 39, 0.08);
+  border-radius: 18px;
+  padding: 34px 28px;
+  text-align: left;
+  box-shadow: 0 10px 26px -18px rgba(0,0,0,0.18);
+  transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease;
+  min-height: 100%;
+}
+
+.al-wedo2-card:hover{
+  transform: translateY(-6px);
+  box-shadow: 0 22px 50px -26px rgba(79, 93, 255, 0.35);
+  border-color: rgba(79, 93, 255, 0.22);
+}
+
+/* Icon square */
+.al-wedo2-icon{
+  width: 56px;
+  height: 56px;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #4f5dff 0%, #8b5cf6 100%);
+  margin-bottom: 22px;
+}
+
+.al-wedo2-icon svg{
+  width: 28px;
+  height: 28px;
+  stroke: #fff;
+  fill: none;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.al-wedo2-card-title{
+  margin: 0 0 12px;
+  font-size: 20px;
+  font-weight: 900;
+  color: #0b1727;
+}
+
+.al-wedo2-card-desc{
+  margin: 0 0 22px;
+  color: rgba(11, 23, 39, 0.65);
+  line-height: 1.7;
+  font-size: 16px;
+}
+
+/* Link */
+.al-wedo2-link{
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  color: #4f5dff;
+  text-decoration: none;
+  font-weight: 700;
+}
+
+.al-wedo2-link span{
+  transition: transform .2s ease;
+}
+
+.al-wedo2-card:hover .al-wedo2-link span{
+  transform: translateX(4px);
+}
