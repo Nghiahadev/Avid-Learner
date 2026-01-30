@@ -64,10 +64,10 @@
         'fallback_cb'    => function () {
           echo '<ul class="menu">';
           echo '<li><a href="' . esc_url(home_url('/')) . '"><span class="hover-span"></span>Home</a></li>';
-          echo '<li><a href="#"><span class="hover-span"></span>Services</a></li>';
-          echo '<li><a href="#"><span class="hover-span"></span>About</a></li>';
-          echo '<li><a href="#"><span class="hover-span"></span>Blog</a></li>';
-          echo '<li><a href="#"><span class="hover-span"></span>Contact</a></li>';
+          echo '<li><a href="' . esc_url(home_url('/services')) . '"><span class="hover-span"></span>Services</a></li>';
+          echo '<li><a href="' . esc_url(home_url('/about')) . '"><span class="hover-span"></span>About</a></li>';
+          echo '<li><a href="' . esc_url(home_url('/blog')) . '"><span class="hover-span"></span>Blog</a></li>';
+          echo '<li><a href="' . esc_url(home_url('/contact')) . '"><span class="hover-span"></span>Contact</a></li>';
           echo '</ul>';
         },
         // Inserts the animated sweep span inside each <a>

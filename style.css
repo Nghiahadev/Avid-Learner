@@ -2063,3 +2063,123 @@ h1,h2,h3,h4,h5,h6{
   opacity: 1;
   transform: translateY(0);
 }
+
+
+/* ===== HERO BANNER (Image + Dark Overlay + Shine) ===== */
+.al-hero {
+  position: relative;
+  overflow: hidden;
+  height: var(--hero-h, 30rem);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: #fff;
+  isolation: isolate;
+
+
+  /* Background image is controlled by CSS variable */
+  background-image: var(--hero-bg);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+/* Dark overlay for readability + vignette */
+.al-hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(120% 90% at 50% 50%, rgba(0,0,0,0.25) 0%, rgba(0,0,0,0.75) 70%, rgba(0,0,0,0.92) 100%),
+    linear-gradient(to bottom, rgba(0,0,0,0.55), rgba(0,0,0,0.55));
+  z-index: 0;
+}
+
+/* Shine / light leak layer */
+/* Keep this for clean layering */
+.al-hero { isolation: isolate; }
+
+/* Shine layer: soft, premium, visible */
+.al-hero::after {
+  content: "";
+  position: absolute;
+  inset: -35%;
+  pointer-events: none;
+
+  /* soft glow + gentle streak */
+  background:
+    radial-gradient(circle at 28% 35%,
+      rgba(255,255,255,0.22),
+      rgba(255,255,255,0) 60%
+    ),
+    linear-gradient(120deg,
+      rgba(255,255,255,0) 40%,
+      rgba(255,255,255,0.16) 50%,
+      rgba(255,255,255,0) 60%
+    );
+
+  filter: blur(12px);
+  opacity: 0.9;
+
+  transform: translateX(-10%) translateY(-6%) rotate(-10deg);
+
+  /* ✅ faster + smooth */
+  animation: alHeroShine 4s ease-in-out infinite alternate;
+  z-index: 1;
+}
+
+/* Smooth travel (same vibe as before, just quicker) */
+@keyframes alHeroShine {
+  from {
+    transform: translateX(-16%) translateY(-10%) rotate(-12deg);
+    opacity: 0.65;
+  }
+  to {
+    transform: translateX(10%) translateY(6%) rotate(-6deg);
+    opacity: 0.95;
+  }
+}
+
+/* Content above overlays */
+.al-hero__inner {
+  position: relative;
+  z-index: 1;
+  max-width: 900px;
+  padding: 0 20px;
+}
+
+.al-hero__title {
+  font-size: clamp(2rem, 4vw, 3.5rem);
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  margin: 0 0 16px;
+}
+
+.al-hero__divider {
+  width: 140px;
+  height: 4px;
+  background: var(--purpleLight);
+  border-radius: 999px;
+  margin: 0 auto 20px;
+}
+
+.al-hero__subtitle {
+  font-size: clamp(1.25rem, 2.2vw, 2rem);
+  font-weight: 700;
+  margin: 0 0 10px;
+}
+
+.al-hero__text {
+  font-size: clamp(1rem, 1.5vw, 1.15rem);
+  line-height: 1.6;
+  margin: 0;
+  opacity: 0.95;
+}
+
+@media (max-width: 768px) {
+  .al-hero {
+    height: 22rem;
+  }
+}

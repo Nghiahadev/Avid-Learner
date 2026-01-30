@@ -443,6 +443,17 @@ if (file_exists($reveal_path)) {
 }
 
 /* ======================================================
+   Hero Banner
+====================================================== */
+add_action('after_setup_theme', function () {
+  add_theme_support('post-thumbnails');
+
+  // make sure pages support featured images
+  add_post_type_support('page', 'thumbnail');
+});
+
+
+/* ======================================================
    THEME SETUP
 ====================================================== */
 function avid_learner_setup() {
