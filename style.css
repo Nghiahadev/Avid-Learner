@@ -1469,3 +1469,597 @@ h1,h2,h3,h4,h5,h6{
 .al-wedo2-card:hover .al-wedo2-link span{
   transform: translateX(4px);
 }
+
+/* =========================================================
+   AVID LEARNER FOOTER — FULL CSS
+   - Dark gradient footer
+   - Newsletter pill form (Newsletter plugin by Stefano Lissa)
+   - Social icons
+   - Responsive layout
+========================================================= */
+
+/* ---------- Footer Background ---------- */
+.al-footer{
+  color:#fff;
+  position:relative;
+  overflow:hidden;
+  background:
+    radial-gradient(1200px 600px at 50% 0%, rgba(135, 92, 255, 0.45), rgba(11, 23, 39, 0.95) 55%),
+    linear-gradient(135deg, #0b1727 0%, #2a1f50 45%, #0b1727 100%);
+}
+
+.al-footer-inner{
+  width:min(1220px, calc(100% - 48px));
+  margin:0 auto;
+  padding:90px 0 0;
+}
+
+/* ---------- Top Row (Newsletter) ---------- */
+.al-footer-top{
+  display:grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap:48px;
+  align-items:start;
+  padding-bottom:70px;
+}
+
+.al-footer-title{
+  font-size:clamp(34px, 4.2vw, 62px);
+  line-height:1.05;
+  font-weight:900;
+  margin:0;
+  letter-spacing:-0.7px;
+}
+
+/* Note line with bell */
+.al-footer-note{
+  display:flex;
+  gap:14px;
+  align-items:flex-start;
+  margin-bottom:14px;
+}
+
+.al-footer-note-icon{
+  width:42px;
+  height:42px;
+  border-radius:999px;
+  display:grid;
+  place-items:center;
+  background:rgba(255,255,255,0.10);
+  border:1px solid rgba(255,255,255,0.14);
+  flex:0 0 auto;
+}
+
+.al-footer-note-icon i{ font-size:16px; }
+
+.al-footer-note p{
+  margin:0;
+  color:rgba(255,255,255,0.92);
+  font-weight:600;
+  line-height:1.5;
+}
+
+.al-footer-divider{
+  height:1px;
+  background:rgba(255,255,255,0.12);
+  margin:0 0 70px;
+}
+
+/* ---------- Middle Row ---------- */
+.al-footer-mid{
+  display:grid;
+  grid-template-columns: 1fr 1.2fr;
+  gap:80px;
+  padding-bottom:70px;
+}
+
+/* Brand/Logo */
+.al-footer-logo img{
+  max-width:180px;
+  height:auto;
+  display:block;
+}
+
+.al-footer-logo-text{
+  color:#fff;
+  font-weight:900;
+  font-size:24px;
+  text-decoration:none;
+}
+
+.al-footer-about{
+  margin:22px 0 26px;
+  color:rgba(255,255,255,0.86);
+  line-height:1.7;
+  max-width:420px;
+}
+
+/* Social buttons */
+.al-footer-social{
+  display:flex;
+  gap:14px;
+  flex-wrap:wrap;
+}
+
+.al-social-btn{
+  width:42px;
+  height:42px;
+  border-radius:999px;
+  display:grid;
+  place-items:center;
+  border:1px solid rgba(255,255,255,0.65);
+  color:rgba(255,255,255,0.95);
+  text-decoration:none;
+  transition: border-color .25s ease, color .25s ease, transform .25s ease, background .25s ease;
+}
+
+.al-social-btn i{ font-size:16px; }
+
+.al-social-btn:hover{
+  border-color:rgba(124,77,255,0.95);
+  color:rgba(124,77,255,0.95);
+  background: rgba(124,77,255,0.08);
+  transform: translateY(-1px);
+}
+
+/* Right columns */
+.al-footer-cols{
+  display:grid;
+  grid-template-columns: 1fr 1fr;
+  gap:80px;
+}
+
+.al-footer-col h3{
+  margin:0 0 18px;
+  font-size:18px;
+  font-weight:900;
+  letter-spacing:0.2px;
+}
+
+/* Quick links list */
+.al-footer-menu{
+  list-style:none;
+  margin:0;
+  padding:0;
+}
+
+.al-footer-menu li{ margin-bottom:12px; }
+
+.al-footer-menu a{
+  color:rgba(255,255,255,0.86);
+  text-decoration:none;
+  transition: color .25s ease, transform .25s ease;
+  display:inline-block;
+}
+
+.al-footer-menu a:hover{
+  color:rgba(124,77,255,0.95);
+  transform: translateX(2px);
+}
+
+/* Contact */
+.al-footer-contact-list{
+  list-style:none;
+  margin:0;
+  padding:0 0 16px;
+}
+
+.al-footer-contact-list li{ margin-bottom:12px; }
+
+.al-footer-contact-list a{
+  color:rgba(255,255,255,0.86);
+  text-decoration:none;
+  transition: color .25s ease;
+}
+
+.al-footer-contact-list a:hover{
+  color: rgba(124,77,255,0.95);
+}
+
+.al-footer-contact-divider{
+  height:1px;
+  background:rgba(255,255,255,0.12);
+  margin:14px 0 18px;
+  width:100%;
+  max-width:340px;
+}
+
+.al-footer-address{
+  margin:0;
+  color:rgba(255,255,255,0.86);
+  line-height:1.6;
+  max-width:340px;
+}
+
+/* ---------- Bottom Row ---------- */
+.al-footer-bottom{
+  border-top:1px solid rgba(255,255,255,0.12);
+  padding:34px 0 44px;
+  text-align:center;
+}
+
+.al-footer-bottom p{
+  margin:0;
+  color:rgba(255,255,255,0.78);
+  font-weight:600;
+}
+
+/* =========================================================
+   NEWSLETTER PLUGIN STYLING (Screenshot Look)
+   Plugin: Newsletter by Stefano Lissa
+========================================================= */
+
+.al-footer-newsletter{
+  width:100%;
+  max-width:560px;
+}
+
+/* Normalize plugin wrappers */
+.al-footer-newsletter .tnp-subscription,
+.al-footer-newsletter .tnp-subscription-minimal,
+.al-footer-newsletter .tnp-widget,
+.al-footer-newsletter .tnp-form{
+  width:100% !important;
+  max-width:100% !important;
+}
+
+/* Remove labels */
+.al-footer-newsletter label{
+  display:none !important;
+}
+
+/* Form pill */
+.al-footer-newsletter form{
+  width:100% !important;
+  display:flex !important;
+  align-items:center !important;
+
+  padding:10px 10px 10px 18px !important;
+  gap:10px !important;
+
+  border-radius:999px !important;
+  background: rgba(255,255,255,0.10) !important;
+  border: 1px solid rgba(255,255,255,0.12) !important;
+
+  box-shadow: 0 14px 30px rgba(0,0,0,0.20) !important;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+/* Kill plugin field spacing */
+.al-footer-newsletter .tnp-field{
+  margin:0 !important;
+  padding:0 !important;
+}
+
+/* Email field grows */
+.al-footer-newsletter .tnp-field-email{
+  flex:1 !important;
+  min-width:0 !important;
+}
+
+/* Email input */
+.al-footer-newsletter input[type="email"],
+.al-footer-newsletter input.tnp-email{
+  width:100% !important;
+  background: transparent !important;
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+
+  color: rgba(255,255,255,0.92) !important;
+  -webkit-text-fill-color: rgba(255,255,255,0.92) !important;
+
+  font-size:16px !important;
+  font-weight:700 !important;
+
+  padding:12px 6px !important;
+  line-height:1.2 !important;
+  opacity: 1 !important;
+}
+
+/* Placeholder visible like screenshot */
+.al-footer-newsletter input[type="email"]::placeholder,
+.al-footer-newsletter input.tnp-email::placeholder{
+  color: rgba(255,255,255,0.85) !important;
+  opacity: 1 !important;
+}
+
+/* Focus glow */
+.al-footer-newsletter form:focus-within{
+  border-color: rgba(124,77,255,0.55) !important;
+  box-shadow:
+    0 14px 30px rgba(0,0,0,0.20),
+    0 0 0 4px rgba(124,77,255,0.16) !important;
+}
+
+/* Submit wrapper reminds flex */
+.al-footer-newsletter .tnp-field-button,
+.al-footer-newsletter .tnp-field-submit{
+  flex:0 0 auto !important;
+}
+
+/* Square purple button (paper plane) */
+.al-footer-newsletter input[type="submit"],
+.al-footer-newsletter input.tnp-submit,
+.al-footer-newsletter button,
+.al-footer-newsletter button.tnp-submit{
+  width:54px !important;
+  height:54px !important;
+  min-width:54px !important;
+
+  border:none !important;
+  border-radius:14px !important;
+
+  background: #6d4bff !important;
+  box-shadow: 0 16px 26px rgba(0,0,0,0.18) !important;
+
+  cursor:pointer !important;
+  display:grid !important;
+  place-items:center !important;
+
+  /* hide plugin text */
+  font-size:0 !important;
+  color: transparent !important;
+
+  transition: transform .18s ease, filter .18s ease;
+}
+
+.al-footer-newsletter input[type="submit"]:hover,
+.al-footer-newsletter input.tnp-submit:hover,
+.al-footer-newsletter button:hover{
+  transform: translateY(-1px) !important;
+  filter: brightness(1.08) !important;
+}
+
+/* Paper-plane icon */
+.al-footer-newsletter input[type="submit"]::before,
+.al-footer-newsletter input.tnp-submit::before,
+.al-footer-newsletter button::before,
+.al-footer-newsletter button.tnp-submit::before{
+  content: "\f1d8"; /* fa-paper-plane */
+  font-family: "Font Awesome 6 Free";
+  font-weight: 900;
+  font-size: 18px;
+  color: #fff;
+  line-height: 1;
+}
+
+/* prevent other icons */
+.al-footer-newsletter input[type="submit"]::after,
+.al-footer-newsletter input.tnp-submit::after,
+.al-footer-newsletter button::after{
+  content: none !important;
+}
+
+/* =========================================================
+   Responsive
+========================================================= */
+@media (max-width: 980px){
+  .al-footer-inner{
+    width:min(1220px, calc(100% - 28px));
+    padding-top:70px;
+  }
+
+  .al-footer-top{
+    grid-template-columns:1fr;
+    gap:26px;
+    padding-bottom:54px;
+  }
+
+  .al-footer-divider{
+    margin-bottom:54px;
+  }
+
+  .al-footer-mid{
+    grid-template-columns:1fr;
+    gap:44px;
+    padding-bottom:54px;
+  }
+
+  .al-footer-cols{
+    grid-template-columns:1fr;
+    gap:34px;
+  }
+
+  .al-footer-newsletter{
+    max-width:100%;
+  }
+}
+
+@media (max-width: 520px){
+  .al-footer-title{
+    font-size:clamp(28px, 8vw, 44px);
+  }
+
+  .al-footer-newsletter form{
+    padding:10px 10px 10px 14px !important;
+  }
+
+  .al-footer-newsletter input[type="submit"],
+  .al-footer-newsletter input.tnp-submit,
+  .al-footer-newsletter button,
+  .al-footer-newsletter button.tnp-submit{
+    width:50px !important;
+    height:50px !important;
+    min-width:50px !important;
+    border-radius:14px !important;
+  }
+}
+
+/* ======================================================
+   PROCESS SECTION (Avid Learner)
+====================================================== */
+
+.al-process{
+  padding: 110px 0;
+  background: #f3f5fb;
+  position: relative;
+  overflow: hidden;
+}
+
+.al-process::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background-image: radial-gradient(rgba(63, 91, 255, 0.10) 1px, transparent 1px);
+  background-size: 24px 24px;
+  opacity: .55;
+  pointer-events:none;
+}
+
+.al-container{
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 24px;
+  position: relative;
+  z-index: 2;
+}
+
+/* header */
+.al-process-head{
+  text-align: center;
+  max-width: 760px;
+  margin: 0 auto 60px;
+}
+
+.al-process-kicker{
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 10px 18px;
+  border-radius: 999px;
+
+  background: rgba(63, 91, 255, 0.10);
+  border: 1px solid rgba(63, 91, 255, 0.18);
+
+  color: #3f5bff;
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  margin-bottom: 16px;
+}
+
+.al-process-title{
+  margin:0 0 16px;
+  font-size: clamp(32px, 3.3vw, 52px);
+  font-weight: 900;
+  line-height: 1.1;
+  color: #0b1727;
+}
+
+.al-process-desc{
+  margin:0 auto;
+  font-size: 18px;
+  line-height: 1.7;
+  color: rgba(11, 23, 39, 0.70);
+}
+
+/* wrapper */
+.al-process-wrap{
+  position: relative;
+}
+
+/* connection line */
+.al-process-line{
+  display:none;
+  position:absolute;
+  left:0;
+  right:0;
+  top:50%;
+  height: 3px;
+  transform: translateY(-50%);
+  background: linear-gradient(90deg, rgba(63,91,255,.18), rgba(63,91,255,.75), rgba(63,91,255,.18));
+  border-radius: 999px;
+  z-index: 1;
+}
+
+@media (min-width: 1024px){
+  .al-process-line{ display:block; }
+}
+
+/* grid */
+.al-process-grid{
+  display:grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 22px;
+  position: relative;
+  z-index: 2;
+}
+
+@media (max-width: 1024px){
+  .al-process-grid{ grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 640px){
+  .al-process-grid{ grid-template-columns: 1fr; }
+}
+
+/* cards */
+.al-process-card{
+  position: relative;
+  background: #fff;
+  border: 1px solid rgba(11, 23, 39, 0.08);
+  border-radius: 18px;
+  padding: 38px 26px 28px;
+  box-shadow: 0 10px 25px -20px rgba(11, 23, 39, 0.18);
+  transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease;
+}
+
+.al-process-card:hover{
+  transform: translateY(-8px);
+  box-shadow: 0 30px 60px -35px rgba(63,91,255,0.45);
+  border-color: rgba(63,91,255,0.25);
+}
+
+/* step badge circle */
+.al-process-badge{
+  position:absolute;
+  top: -16px;
+  left: 26px;
+  width: 34px;
+  height: 34px;
+  border-radius: 999px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background: linear-gradient(135deg, #3f5bff 0%, #9b4dff 100%);
+  box-shadow: 0 10px 25px rgba(63,91,255,0.35);
+}
+
+.al-process-badge span{
+  font-size: 11px;
+  font-weight: 900;
+  color: #fff;
+  letter-spacing: .02em;
+}
+
+.al-process-card-inner h3{
+  margin: 0 0 12px;
+  font-size: 18px;
+  font-weight: 900;
+  color: #0b1727;
+}
+
+.al-process-card-inner p{
+  margin: 0;
+  color: rgba(11, 23, 39, 0.70);
+  line-height: 1.7;
+  font-size: 14.5px;
+}
+
+/* ======================================================
+   Scroll reveal
+====================================================== */
+.al-reveal{
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity .8s cubic-bezier(.2,.8,.2,1),
+              transform .8s cubic-bezier(.2,.8,.2,1);
+  transition-delay: var(--delay, 0s);
+}
+
+.al-reveal.is-visible{
+  opacity: 1;
+  transform: translateY(0);
+}

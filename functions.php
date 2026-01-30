@@ -22,12 +22,10 @@ function al_to_url($maybe_path) {
   $maybe_path = trim((string)$maybe_path);
   if ($maybe_path === '') return '';
 
-  // If already absolute URL
   if (preg_match('#^https?://#i', $maybe_path)) {
     return esc_url($maybe_path);
   }
 
-  // If user typed "contact" (no slash), make it "/contact"
   if ($maybe_path[0] !== '/') {
     $maybe_path = '/' . $maybe_path;
   }
@@ -47,6 +45,14 @@ function avid_learner_enqueue_assets() {
     get_stylesheet_uri(),
     [],
     al_asset_version($style_path)
+  );
+
+  // Font Awesome (Footer social + bell icon)
+  wp_enqueue_style(
+    'avid-learner-fontawesome',
+    'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css',
+    [],
+    '6.5.0'
   );
 
   // Slider JS
@@ -161,9 +167,7 @@ function al_customize_why_choose_us($wp_customize) {
     'type'        => 'textarea',
   ]);
 
-  // Stats (4 cards)
   for ($i = 1; $i <= 4; $i++) {
-
     $default_number = ($i === 1 ? '500' : ($i === 2 ? '98' : ($i === 3 ? '150' : '12')));
     $default_prefix = ($i === 3 ? '$' : '');
     $default_suffix = ($i === 1 ? '+' : ($i === 2 ? '%' : ($i === 3 ? 'M' : '+')));
@@ -214,7 +218,7 @@ add_action('customize_register', 'al_customize_why_choose_us');
 
 
 /* ======================================================
-   CUSTOMIZER: WHAT WE DO (SERVICES GRID)
+   CUSTOMIZER: WHAT WE DO
 ====================================================== */
 function al_customize_what_we_do($wp_customize) {
 
@@ -283,7 +287,7 @@ function al_customize_what_we_do($wp_customize) {
 
   for ($i = 1; $i <= 4; $i++) {
     $wp_customize->add_setting("al_wedo_{$i}_title", [
-      'default'           => $defaults[$i-1][0],
+      'default'           => $defaults[$i - 1][0],
       'sanitize_callback' => 'sanitize_text_field',
     ]);
     $wp_customize->add_control("al_wedo_{$i}_title", [
@@ -293,7 +297,7 @@ function al_customize_what_we_do($wp_customize) {
     ]);
 
     $wp_customize->add_setting("al_wedo_{$i}_desc", [
-      'default'           => $defaults[$i-1][1],
+      'default'           => $defaults[$i - 1][1],
       'sanitize_callback' => 'sanitize_textarea_field',
     ]);
     $wp_customize->add_control("al_wedo_{$i}_desc", [
@@ -381,6 +385,62 @@ function al_customize_cta_section($wp_customize) {
 }
 add_action('customize_register', 'al_customize_cta_section');
 
+
+/* ======================================================
+   CUSTOMIZER: FOOTER (OPTIONAL)
+====================================================== */
+function al_customize_footer($wp_customize) {
+
+  $wp_customize->add_section('al_footer', [
+    'title'    => __('Footer', 'avid-learner'),
+    'priority' => 60,
+  ]);
+
+  $fields = [
+    'al_footer_title'   => ['Newsletter Title', 'Join our newsletter for event important announcement', 'text'],
+    'al_footer_note'    => ['Newsletter Note', 'Stay informed with instant updates delivered straight to your inbox.', 'text'],
+    'al_footer_brand'   => ['Brand Name (fallback)', 'Avid Learner', 'text'],
+    'al_footer_about'   => ['About Text', 'Experience a world-class conference designed to inspire innovation, empower professionals, and connect leaders from around the globe.', 'textarea'],
+    'al_footer_phone'   => ['Phone', '+00 123 456 789', 'text'],
+    'al_footer_email'   => ['Email', 'support@domainname.com', 'text'],
+    'al_footer_address' => ['Address', '45/2 Central Business Innovation Near International Trade Tower', 'textarea'],
+
+    'al_social_facebook'  => ['Facebook URL', '#', 'text'],
+    'al_social_twitter'   => ['X/Twitter URL', '#', 'text'],
+    'al_social_instagram' => ['Instagram URL', '#', 'text'],
+    'al_social_linkedin'  => ['LinkedIn URL', '#', 'text'],
+  ];
+
+  foreach ($fields as $key => $data) {
+    [$label, $default, $type] = $data;
+
+    $wp_customize->add_setting($key, [
+      'default'           => $default,
+      'sanitize_callback' => ($type === 'textarea') ? 'sanitize_textarea_field' : 'sanitize_text_field',
+    ]);
+
+    $wp_customize->add_control($key, [
+      'label'   => __($label, 'avid-learner'),
+      'section' => 'al_footer',
+      'type'    => $type,
+    ]);
+  }
+}
+add_action('customize_register', 'al_customize_footer');
+
+/* ======================================================
+   Process
+====================================================== */
+    $reveal_path = get_template_directory() . '/assets/js/reveal.js';
+if (file_exists($reveal_path)) {
+  wp_enqueue_script(
+    'avid-learner-reveal',
+    get_template_directory_uri() . '/assets/js/reveal.js',
+    [],
+    al_asset_version($reveal_path),
+    true
+  );
+}
 
 /* ======================================================
    THEME SETUP

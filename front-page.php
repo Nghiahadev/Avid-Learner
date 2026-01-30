@@ -186,16 +186,16 @@ get_header();
   </section>
 
   <!-- =====================================================
-       WHY CHOOSE US (Template Part)
+       (Template Part)
   ====================================================== -->
 
     <?php get_template_part('why-choose-us'); ?>
 
     <?php get_template_part('what-we-do'); ?>
 
-
     <?php get_template_part('cta'); ?>
 
+    <?php get_template_part('process'); ?>
   <!-- =====================================================
        ELEMENTOR EDITABLE AREA
        (Add sections in Elementor Editor for the Home page)
