@@ -452,6 +452,31 @@ add_action('after_setup_theme', function () {
   add_post_type_support('page', 'thumbnail');
 });
 
+/* ======================================================
+   FaQ
+====================================================== */
+add_action('wp_enqueue_scripts', function () {
+  wp_enqueue_script(
+    'al-faq',
+    get_template_directory_uri() . '/assets/js/faq.js',
+    [],
+    '1.0.0',
+    true
+  );
+});
+
+/* ======================================================
+   Our Approach
+====================================================== */
+add_action('wp_enqueue_scripts', function () {
+  wp_enqueue_style(
+    'al-our-approach',
+    get_template_directory_uri() . '/assets/css/our-approach.css',
+    [],
+    '1.0.0'
+  );
+});
+
 
 /* ======================================================
    THEME SETUP

@@ -34,6 +34,30 @@ get_header();
     the_content();
   endwhile;
   ?>
+
+
+  <?php get_template_part('our-approach'); ?>
+
+    <!-- =====================================================
+       FAQ – Avid Learner
+  ====================================================== -->
+    <?php get_template_part('faq-learning'); ?>
+
+    <!-- =====================================================
+       ELEMENTOR EDITABLE AREA
+       (Add sections in Elementor Editor for the Home page)
+  ====================================================== -->
+  <section class="home-elementor">
+    <?php
+    while ( have_posts() ) : the_post();
+      the_content();
+    endwhile;
+    ?>
+  </section>
+    <!-- =====================================================
+       CTA Consultation 
+  ====================================================== -->
+  <?php get_template_part('cta-consultation'); ?>
 </main>
 
 <?php get_footer(); ?>
