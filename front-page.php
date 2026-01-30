@@ -171,11 +171,11 @@ get_header();
 
           <text class="text-content">
             <textPath href="#textPathBlob" startOffset="0%">
-              ✨ Crafted with Care ✨ Crafted with Care ✨ Crafted with Care 
+              ✨ Crafted with Care ✨ Crafted with Care ✨ Crafted with Care
               <animate attributeName="startOffset" from="0%" to="100%" dur="15s" repeatCount="indefinite" />
             </textPath>
             <textPath href="#textPathBlob" startOffset="100%">
-              ✨ Crafted with Care ✨ Crafted with Care ✨ Crafted with Care 
+              ✨ Crafted with Care ✨ Crafted with Care ✨ Crafted with Care
               <animate attributeName="startOffset" from="-100%" to="0%" dur="15s" repeatCount="indefinite" />
             </textPath>
           </text>
