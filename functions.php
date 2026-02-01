@@ -34,6 +34,30 @@ function al_to_url($maybe_path) {
 }
 
 /* ======================================================
+   THEME SETUP
+====================================================== */
+function avid_learner_setup() {
+
+  add_theme_support('title-tag');
+  add_theme_support('post-thumbnails');
+
+  // make sure pages support featured images
+  add_post_type_support('page', 'thumbnail');
+
+  add_theme_support('custom-logo', [
+    'height'      => 80,
+    'width'       => 280,
+    'flex-height' => true,
+    'flex-width'  => true,
+  ]);
+
+  register_nav_menus([
+    'primary' => __('Primary Menu', 'avid-learner'),
+  ]);
+}
+add_action('after_setup_theme', 'avid_learner_setup');
+
+/* ======================================================
    ENQUEUE STYLES & SCRIPTS
 ====================================================== */
 function avid_learner_enqueue_assets() {
@@ -47,13 +71,24 @@ function avid_learner_enqueue_assets() {
     al_asset_version($style_path)
   );
 
-  // Font Awesome (Footer social + bell icon)
+  // Font Awesome (Footer social + icons)
   wp_enqueue_style(
     'avid-learner-fontawesome',
     'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css',
     [],
     '6.5.0'
   );
+
+  // Our Approach CSS
+  $approach_css = get_template_directory() . '/assets/css/our-approach.css';
+  if (file_exists($approach_css)) {
+    wp_enqueue_style(
+      'al-our-approach',
+      get_template_directory_uri() . '/assets/css/our-approach.css',
+      [],
+      al_asset_version($approach_css)
+    );
+  }
 
   // Slider JS
   $slider_path = get_template_directory() . '/assets/js/slider.js';
@@ -102,9 +137,32 @@ function avid_learner_enqueue_assets() {
       true
     );
   }
+
+  // Reveal JS (Process)
+  $reveal_path = get_template_directory() . '/assets/js/reveal.js';
+  if (file_exists($reveal_path)) {
+    wp_enqueue_script(
+      'avid-learner-reveal',
+      get_template_directory_uri() . '/assets/js/reveal.js',
+      [],
+      al_asset_version($reveal_path),
+      true
+    );
+  }
+
+  // FAQ JS
+  $faq_path = get_template_directory() . '/assets/js/faq.js';
+  if (file_exists($faq_path)) {
+    wp_enqueue_script(
+      'al-faq',
+      get_template_directory_uri() . '/assets/js/faq.js',
+      [],
+      al_asset_version($faq_path),
+      true
+    );
+  }
 }
 add_action('wp_enqueue_scripts', 'avid_learner_enqueue_assets');
-
 
 /* ======================================================
    CUSTOMIZER: WHY CHOOSE US
@@ -216,7 +274,6 @@ function al_customize_why_choose_us($wp_customize) {
 }
 add_action('customize_register', 'al_customize_why_choose_us');
 
-
 /* ======================================================
    CUSTOMIZER: WHAT WE DO
 ====================================================== */
@@ -309,7 +366,6 @@ function al_customize_what_we_do($wp_customize) {
 }
 add_action('customize_register', 'al_customize_what_we_do');
 
-
 /* ======================================================
    CUSTOMIZER: CTA SECTION
 ====================================================== */
@@ -385,9 +441,8 @@ function al_customize_cta_section($wp_customize) {
 }
 add_action('customize_register', 'al_customize_cta_section');
 
-
 /* ======================================================
-   CUSTOMIZER: FOOTER (OPTIONAL)
+   CUSTOMIZER: FOOTER
 ====================================================== */
 function al_customize_footer($wp_customize) {
 
@@ -429,72 +484,259 @@ function al_customize_footer($wp_customize) {
 add_action('customize_register', 'al_customize_footer');
 
 /* ======================================================
-   Process
+   CUSTOMIZER: NOTICE BAR (Ticker)
 ====================================================== */
-    $reveal_path = get_template_directory() . '/assets/js/reveal.js';
-if (file_exists($reveal_path)) {
-  wp_enqueue_script(
-    'avid-learner-reveal',
-    get_template_directory_uri() . '/assets/js/reveal.js',
-    [],
-    al_asset_version($reveal_path),
-    true
-  );
-}
+add_action('customize_register', function ($wp_customize) {
 
-/* ======================================================
-   Hero Banner
-====================================================== */
-add_action('after_setup_theme', function () {
-  add_theme_support('post-thumbnails');
-
-  // make sure pages support featured images
-  add_post_type_support('page', 'thumbnail');
-});
-
-/* ======================================================
-   FaQ
-====================================================== */
-add_action('wp_enqueue_scripts', function () {
-  wp_enqueue_script(
-    'al-faq',
-    get_template_directory_uri() . '/assets/js/faq.js',
-    [],
-    '1.0.0',
-    true
-  );
-});
-
-/* ======================================================
-   Our Approach
-====================================================== */
-add_action('wp_enqueue_scripts', function () {
-  wp_enqueue_style(
-    'al-our-approach',
-    get_template_directory_uri() . '/assets/css/our-approach.css',
-    [],
-    '1.0.0'
-  );
-});
-
-
-/* ======================================================
-   THEME SETUP
-====================================================== */
-function avid_learner_setup() {
-
-  add_theme_support('title-tag');
-  add_theme_support('post-thumbnails');
-
-  add_theme_support('custom-logo', [
-    'height'      => 80,
-    'width'       => 280,
-    'flex-height' => true,
-    'flex-width'  => true,
+  $wp_customize->add_section('al_notice_bar', [
+    'title'       => __('Notice Bar', 'avid-learner'),
+    'priority'    => 35,
+    'description' => __('Edit the scrolling notice/ticker items. Enter one item per line.', 'avid-learner'),
   ]);
 
-  register_nav_menus([
-    'primary' => __('Primary Menu', 'avid-learner'),
+  // Toggle on/off
+  $wp_customize->add_setting('al_notice_enabled', [
+    'default'           => true,
+    'sanitize_callback' => function ($val) {
+      return (bool) $val;
+    },
   ]);
-}
-add_action('after_setup_theme', 'avid_learner_setup');
+  $wp_customize->add_control('al_notice_enabled', [
+    'label'   => __('Enable Notice Bar', 'avid-learner'),
+    'section' => 'al_notice_bar',
+    'type'    => 'checkbox',
+  ]);
+
+  // Items (one per line)
+  $wp_customize->add_setting('al_notice_items', [
+    'default'           => "Latest Updates\nNew Announcements\nWorkshop Alerts\nLive Notices\nEvent Countdown\nCommunity News",
+    'sanitize_callback' => 'sanitize_textarea_field',
+  ]);
+  $wp_customize->add_control('al_notice_items', [
+    'label'       => __('Notice Items', 'avid-learner'),
+    'description' => __('Enter one item per line.', 'avid-learner'),
+    'section'     => 'al_notice_bar',
+    'type'        => 'textarea',
+  ]);
+
+});
+
+/* ======================================================
+   CUSTOMIZER: OUR APPROACH
+====================================================== */
+add_action('customize_register', function ($wp_customize) {
+
+  $wp_customize->add_section('al_our_approach', [
+    'title'       => __('Our Approach', 'avid-learner'),
+    'priority'    => 44,
+    'description' => __('Edit the Our Approach section (heading, button, and cards).', 'avid-learner'),
+  ]);
+
+  // Heading small label (h3)
+  $wp_customize->add_setting('al_approach_kicker', [
+    'default'           => 'our approach',
+    'sanitize_callback' => 'sanitize_text_field',
+  ]);
+  $wp_customize->add_control('al_approach_kicker', [
+    'label'   => __('Kicker (small heading)', 'avid-learner'),
+    'section' => 'al_our_approach',
+    'type'    => 'text',
+  ]);
+
+  // Main heading
+  $wp_customize->add_setting('al_approach_title', [
+    'default'           => 'Customized strategies for',
+    'sanitize_callback' => 'sanitize_text_field',
+  ]);
+  $wp_customize->add_control('al_approach_title', [
+    'label'   => __('Main heading (first part)', 'avid-learner'),
+    'section' => 'al_our_approach',
+    'type'    => 'text',
+  ]);
+
+  // Highlighted word in <span>
+  $wp_customize->add_setting('al_approach_highlight', [
+    'default'           => 'learning success',
+    'sanitize_callback' => 'sanitize_text_field',
+  ]);
+  $wp_customize->add_control('al_approach_highlight', [
+    'label'   => __('Highlighted text (span)', 'avid-learner'),
+    'section' => 'al_our_approach',
+    'type'    => 'text',
+  ]);
+
+  // Button text
+  $wp_customize->add_setting('al_approach_btn_text', [
+    'default'           => 'Contact now',
+    'sanitize_callback' => 'sanitize_text_field',
+  ]);
+  $wp_customize->add_control('al_approach_btn_text', [
+    'label'   => __('Button text', 'avid-learner'),
+    'section' => 'al_our_approach',
+    'type'    => 'text',
+  ]);
+
+  // Button link (path or full URL)
+  $wp_customize->add_setting('al_approach_btn_url', [
+    'default'           => '/contact',
+    'sanitize_callback' => 'sanitize_text_field',
+  ]);
+  $wp_customize->add_control('al_approach_btn_url', [
+    'label'       => __('Button URL', 'avid-learner'),
+    'description' => __('Example: /contact or https://yoursite.com/contact', 'avid-learner'),
+    'section'     => 'al_our_approach',
+    'type'        => 'text',
+  ]);
+
+  // Cards (3)
+  $defaults = [
+    [
+      'title' => 'our mission',
+      'text'  => 'Empowering learners with practical paths to grow skills and build real projects.',
+    ],
+    [
+      'title' => 'our vision',
+      'text'  => 'A community where learning is clear, consistent, and connected to real outcomes.',
+    ],
+    [
+      'title' => 'our value',
+      'text'  => 'Simplicity, momentum, and support—so you can learn smarter and ship faster.',
+    ],
+  ];
+
+  for ($i = 1; $i <= 3; $i++) {
+    // Card title
+    $wp_customize->add_setting("al_approach_{$i}_title", [
+      'default'           => $defaults[$i - 1]['title'],
+      'sanitize_callback' => 'sanitize_text_field',
+    ]);
+    $wp_customize->add_control("al_approach_{$i}_title", [
+      'label'   => sprintf(__('Card %d title', 'avid-learner'), $i),
+      'section' => 'al_our_approach',
+      'type'    => 'text',
+    ]);
+
+    // Card text
+    $wp_customize->add_setting("al_approach_{$i}_text", [
+      'default'           => $defaults[$i - 1]['text'],
+      'sanitize_callback' => 'sanitize_textarea_field',
+    ]);
+    $wp_customize->add_control("al_approach_{$i}_text", [
+      'label'   => sprintf(__('Card %d description', 'avid-learner'), $i),
+      'section' => 'al_our_approach',
+      'type'    => 'textarea',
+    ]);
+
+    // Card icon (image picker)
+    $wp_customize->add_setting("al_approach_{$i}_icon", [
+      'default'           => '',
+      'sanitize_callback' => 'absint', // attachment ID
+    ]);
+    if (class_exists('WP_Customize_Media_Control')) {
+      $wp_customize->add_control(new WP_Customize_Media_Control(
+        $wp_customize,
+        "al_approach_{$i}_icon",
+        [
+          'section'   => 'al_our_approach',
+          'label'     => sprintf(__('Card %d icon', 'avid-learner'), $i),
+          'mime_type' => 'image',
+        ]
+      ));
+    }
+
+    // Card image (image picker)
+    $wp_customize->add_setting("al_approach_{$i}_image", [
+      'default'           => '',
+      'sanitize_callback' => 'absint', // attachment ID
+    ]);
+    if (class_exists('WP_Customize_Media_Control')) {
+      $wp_customize->add_control(new WP_Customize_Media_Control(
+        $wp_customize,
+        "al_approach_{$i}_image",
+        [
+          'section'   => 'al_our_approach',
+          'label'     => sprintf(__('Card %d image', 'avid-learner'), $i),
+          'mime_type' => 'image',
+        ]
+      ));
+    }
+  }
+});
+
+/* ======================================================
+   CUSTOMIZER: FAQ SECTION (Editable FAQs + Images)
+====================================================== */
+add_action('customize_register', function ($wp_customize) {
+
+  $wp_customize->add_section('al_faq_section', [
+    'title'       => __('FAQ Section', 'avid-learner'),
+    'priority'    => 46,
+    'description' => __('Edit the FAQ content and images used in the FAQ block.', 'avid-learner'),
+  ]);
+
+  // Title
+  $wp_customize->add_setting('al_faq_title', [
+    'default'           => 'Frequently Asked Questions',
+    'sanitize_callback' => 'sanitize_text_field',
+  ]);
+  $wp_customize->add_control('al_faq_title', [
+    'section' => 'al_faq_section',
+    'label'   => __('FAQ Title', 'avid-learner'),
+    'type'    => 'text',
+  ]);
+
+  // Subtitle
+  $wp_customize->add_setting('al_faq_subtitle', [
+    'default'           => 'Quick answers about Avid Learner—what it is, who it’s for, and how to stay updated.',
+    'sanitize_callback' => 'sanitize_textarea_field',
+  ]);
+  $wp_customize->add_control('al_faq_subtitle', [
+    'section' => 'al_faq_section',
+    'label'   => __('FAQ Subtitle', 'avid-learner'),
+    'type'    => 'textarea',
+  ]);
+
+  // FAQ Items (4)
+  for ($i = 1; $i <= 4; $i++) {
+
+    $wp_customize->add_setting("al_faq_q_{$i}", [
+      'default'           => '',
+      'sanitize_callback' => 'sanitize_text_field',
+    ]);
+    $wp_customize->add_control("al_faq_q_{$i}", [
+      'section' => 'al_faq_section',
+      'label'   => sprintf(__('Question %d', 'avid-learner'), $i),
+      'type'    => 'text',
+    ]);
+
+    $wp_customize->add_setting("al_faq_a_{$i}", [
+      'default'           => '',
+      'sanitize_callback' => 'sanitize_textarea_field',
+    ]);
+    $wp_customize->add_control("al_faq_a_{$i}", [
+      'section' => 'al_faq_section',
+      'label'   => sprintf(__('Answer %d', 'avid-learner'), $i),
+      'type'    => 'textarea',
+    ]);
+  }
+
+  // Images (4) via media picker
+  for ($i = 1; $i <= 4; $i++) {
+    $wp_customize->add_setting("al_faq_img_{$i}", [
+      'default'           => '',
+      'sanitize_callback' => 'absint', // attachment ID
+    ]);
+
+    if (class_exists('WP_Customize_Media_Control')) {
+      $wp_customize->add_control(new WP_Customize_Media_Control(
+        $wp_customize,
+        "al_faq_img_{$i}",
+        [
+          'section'   => 'al_faq_section',
+          'label'     => sprintf(__('FAQ Image %d', 'avid-learner'), $i),
+          'mime_type' => 'image',
+        ]
+      ));
+    }
+  }
+});

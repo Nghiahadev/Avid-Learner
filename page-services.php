@@ -1,7 +1,7 @@
 <?php
 /**
  * Services Page (Hard-coded Hero Image)
- * This file is automatically used when page slug = services
+ * Auto-used when page slug = services
  */
 
 get_header();
@@ -28,36 +28,20 @@ get_header();
 </section>
 
 <main class="site-main services-page">
-  <?php
-  while (have_posts()) :
-    the_post();
-    the_content();
-  endwhile;
-  ?>
 
+  <!-- ✅ Elementor / Gutenberg editable content (ONLY ONCE) -->
+  <section class="services-content">
+    <?php while ( have_posts() ) : the_post(); ?>
+      <?php the_content(); ?>
+    <?php endwhile; ?>
+  </section>
 
   <?php get_template_part('our-approach'); ?>
 
-    <!-- =====================================================
-       FAQ – Avid Learner
-  ====================================================== -->
-    <?php get_template_part('faq-learning'); ?>
+  <?php get_template_part('faq-learning'); ?>
 
-    <!-- =====================================================
-       ELEMENTOR EDITABLE AREA
-       (Add sections in Elementor Editor for the Home page)
-  ====================================================== -->
-  <section class="home-elementor">
-    <?php
-    while ( have_posts() ) : the_post();
-      the_content();
-    endwhile;
-    ?>
-  </section>
-    <!-- =====================================================
-       CTA Consultation 
-  ====================================================== -->
   <?php get_template_part('cta-consultation'); ?>
+
 </main>
 
 <?php get_footer(); ?>
