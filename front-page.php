@@ -200,13 +200,6 @@ get_header();
        ELEMENTOR EDITABLE AREA
        (Add sections in Elementor Editor for the Home page)
   ====================================================== -->
-  <section class="home-elementor">
-    <?php
-    while ( have_posts() ) : the_post();
-      the_content();
-    endwhile;
-    ?>
-  </section>
 
 </main>
 

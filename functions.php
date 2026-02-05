@@ -740,3 +740,416 @@ add_action('customize_register', function ($wp_customize) {
     }
   }
 });
+
+/**
+ * =========================================================
+ * Stacking Cards (5) - Customizer Settings
+ * =========================================================
+ */
+add_action('customize_register', function ($wp_customize) {
+
+  // Section
+  $wp_customize->add_section('al_stack_cards', [
+    'title'       => __('Stacking Cards Section', 'avid-learner'),
+    'priority'    => 45,
+    'description' => __('Edit the sticky stacking cards section (5 cards).', 'avid-learner'),
+  ]);
+
+  // Eyebrow
+  $wp_customize->add_setting('al_stack_eyebrow', [
+    'default'           => 'Services',
+    'sanitize_callback' => 'sanitize_text_field',
+  ]);
+  $wp_customize->add_control('al_stack_eyebrow', [
+    'label'   => __('Eyebrow (small title)', 'avid-learner'),
+    'section' => 'al_stack_cards',
+    'type'    => 'text',
+  ]);
+
+  // Main Title
+  $wp_customize->add_setting('al_stack_title', [
+    'default'           => 'Development programs built for leaders and teams',
+    'sanitize_callback' => 'sanitize_text_field',
+  ]);
+  $wp_customize->add_control('al_stack_title', [
+    'label'   => __('Main Title', 'avid-learner'),
+    'section' => 'al_stack_cards',
+    'type'    => 'text',
+  ]);
+
+  // Subtitle
+  $wp_customize->add_setting('al_stack_subtitle', [
+    'default'           => 'Scroll to explore five ways we help strengthen leadership, alignment, and performance—without adding complexity.',
+    'sanitize_callback' => 'sanitize_textarea_field',
+  ]);
+  $wp_customize->add_control('al_stack_subtitle', [
+    'label'   => __('Subtitle', 'avid-learner'),
+    'section' => 'al_stack_cards',
+    'type'    => 'textarea',
+  ]);
+
+  // Button text + links (optional)
+  $wp_customize->add_setting('al_stack_btn1_text', [
+    'default'           => 'Book a consult',
+    'sanitize_callback' => 'sanitize_text_field',
+  ]);
+  $wp_customize->add_control('al_stack_btn1_text', [
+    'label'   => __('Primary Button Text', 'avid-learner'),
+    'section' => 'al_stack_cards',
+    'type'    => 'text',
+  ]);
+
+  $wp_customize->add_setting('al_stack_btn1_url', [
+    'default'           => '/contact',
+    'sanitize_callback' => 'esc_url_raw',
+  ]);
+  $wp_customize->add_control('al_stack_btn1_url', [
+    'label'       => __('Primary Button URL (relative or full URL)', 'avid-learner'),
+    'section'     => 'al_stack_cards',
+    'type'        => 'text',
+    'description' => __('Example: /contact', 'avid-learner'),
+  ]);
+
+  $wp_customize->add_setting('al_stack_btn2_text', [
+    'default'           => 'View services',
+    'sanitize_callback' => 'sanitize_text_field',
+  ]);
+  $wp_customize->add_control('al_stack_btn2_text', [
+    'label'   => __('Secondary Button Text', 'avid-learner'),
+    'section' => 'al_stack_cards',
+    'type'    => 'text',
+  ]);
+
+  $wp_customize->add_setting('al_stack_btn2_url', [
+    'default'           => '/services',
+    'sanitize_callback' => 'esc_url_raw',
+  ]);
+  $wp_customize->add_control('al_stack_btn2_url', [
+    'label'       => __('Secondary Button URL (relative or full URL)', 'avid-learner'),
+    'section'     => 'al_stack_cards',
+    'type'        => 'text',
+    'description' => __('Example: /services', 'avid-learner'),
+  ]);
+
+  /**
+   * 5 Cards Defaults
+   */
+  $defaults = [
+    1 => [
+      'label' => '01. SERVICE',
+      'title' => 'Talent Development',
+      'text'  => 'Build essential capabilities with practical learning paths, real-world application, and measurable skill growth.',
+    ],
+    2 => [
+      'label' => '02. SERVICE',
+      'title' => 'Team Coaching & Development',
+      'text'  => 'Improve trust, alignment, and collaboration through facilitated coaching sessions that strengthen team performance.',
+    ],
+    3 => [
+      'label' => '03. SERVICE',
+      'title' => 'Executive Coaching & Development',
+      'text'  => 'One-on-one coaching for leaders to sharpen decision-making, communication, presence, and strategic execution.',
+    ],
+    4 => [
+      'label' => '04. SERVICE',
+      'title' => 'Leadership Development & Facilitation',
+      'text'  => 'Workshops and facilitation that elevate leadership habits, clarity, and accountability across the organization.',
+    ],
+    5 => [
+      'label' => '05. SERVICE',
+      'title' => 'Culture & Change Management',
+      'text'  => 'Guide change with structure and empathy—aligning people, processes, and communication so adoption actually sticks.',
+    ],
+  ];
+
+  // Card fields (1..5)
+  for ($i = 1; $i <= 5; $i++) {
+
+    $wp_customize->add_setting("al_stack_card{$i}_label", [
+      'default'           => $defaults[$i]['label'],
+      'sanitize_callback' => 'sanitize_text_field',
+    ]);
+    $wp_customize->add_control("al_stack_card{$i}_label", [
+      'label'   => sprintf(__('Card %d - Label (e.g. 01. SERVICE)', 'avid-learner'), $i),
+      'section' => 'al_stack_cards',
+      'type'    => 'text',
+    ]);
+
+    $wp_customize->add_setting("al_stack_card{$i}_title", [
+      'default'           => $defaults[$i]['title'],
+      'sanitize_callback' => 'sanitize_text_field',
+    ]);
+    $wp_customize->add_control("al_stack_card{$i}_title", [
+      'label'   => sprintf(__('Card %d - Heading', 'avid-learner'), $i),
+      'section' => 'al_stack_cards',
+      'type'    => 'text',
+    ]);
+
+    $wp_customize->add_setting("al_stack_card{$i}_text", [
+      'default'           => $defaults[$i]['text'],
+      'sanitize_callback' => 'sanitize_textarea_field',
+    ]);
+    $wp_customize->add_control("al_stack_card{$i}_text", [
+      'label'   => sprintf(__('Card %d - Description', 'avid-learner'), $i),
+      'section' => 'al_stack_cards',
+      'type'    => 'textarea',
+    ]);
+
+    $wp_customize->add_setting("al_stack_card{$i}_image", [
+      'default'           => '',
+      'sanitize_callback' => 'esc_url_raw',
+    ]);
+
+    $wp_customize->add_control(new WP_Customize_Image_Control(
+      $wp_customize,
+      "al_stack_card{$i}_image",
+      [
+        'label'   => sprintf(__('Card %d - Image', 'avid-learner'), $i),
+        'section' => 'al_stack_cards',
+      ]
+    ));
+  }
+});
+
+/**
+ * =========================================================
+ * Enqueue style.css + Inline JS for stacking effect
+ * (No extra asset files required)
+ * =========================================================
+ */
+add_action('wp_enqueue_scripts', function () {
+
+  // If your theme already enqueues style.css, you can remove this line.
+  wp_enqueue_style('al-style', get_stylesheet_uri(), [], wp_get_theme()->get('Version'));
+
+  $js = <<<JS
+(() => {
+  const cards = document.querySelectorAll('.al-stack-card');
+  if (!cards.length) return;
+
+  const onScroll = () => {
+    const viewportHeight = window.innerHeight;
+    const isMobile = window.innerWidth <= 768;
+    const stickyTopOffset = isMobile ? viewportHeight * 0.10 : viewportHeight * 0.15;
+
+    cards.forEach((card, index) => {
+      const nextCard = cards[index + 1];
+      if (!nextCard) return;
+
+      const nextRect = nextCard.getBoundingClientRect();
+      const distance = nextRect.top - stickyTopOffset;
+
+      if (distance < viewportHeight && distance > 0) {
+        // Desktop shrinks a bit more; mobile shrinks less for readability
+        const maxShrink = isMobile ? 0.965 : 0.92;
+        const factor = (1 - maxShrink) / viewportHeight;
+
+        const scale = 1 - ((viewportHeight - distance) * factor);
+        const finalScale = Math.max(maxShrink, Math.min(1, scale));
+
+        // Keep brightness high since we are on a white theme
+        const brightness = Math.max(0.86, Math.min(1, scale));
+
+        card.style.transform = `scale(\${finalScale})`;
+        card.style.filter = `brightness(\${brightness})`;
+      } else if (distance <= 0) {
+        const maxShrink = isMobile ? 0.965 : 0.92;
+        card.style.transform = `scale(\${maxShrink})`;
+        card.style.filter = 'brightness(0.86)';
+      } else {
+        card.style.transform = 'scale(1)';
+        card.style.filter = 'brightness(1)';
+      }
+    });
+  };
+
+  window.addEventListener('scroll', onScroll, { passive: true });
+  window.addEventListener('resize', onScroll);
+  onScroll();
+})();
+JS;
+
+  // Attach inline JS to a registered handle
+  wp_register_script('al-stack-inline', '', [], null, true);
+  wp_enqueue_script('al-stack-inline');
+  wp_add_inline_script('al-stack-inline', $js);
+});
+
+
+/*CF7 */
+add_action('customize_register', function ($wp_customize) {
+
+  $wp_customize->add_section('al_contact_page', [
+    'title'    => __('Contact Page', 'avid-learner'),
+    'priority' => 46,
+    'description' => __('Customize the Contact page content and Contact Form 7 shortcode.', 'avid-learner'),
+  ]);
+
+  // HERO
+  $wp_customize->add_setting('al_contact_badge', [
+    'default' => 'Get in Touch',
+    'sanitize_callback' => 'sanitize_text_field',
+  ]);
+  $wp_customize->add_control('al_contact_badge', [
+    'label' => __('Hero Badge', 'avid-learner'),
+    'section' => 'al_contact_page',
+    'type' => 'text',
+  ]);
+
+  $wp_customize->add_setting('al_contact_title', [
+    'default' => "Let's Start a Conversation",
+    'sanitize_callback' => 'sanitize_text_field',
+  ]);
+  $wp_customize->add_control('al_contact_title', [
+    'label' => __('Hero Title', 'avid-learner'),
+    'section' => 'al_contact_page',
+    'type' => 'text',
+  ]);
+
+  $wp_customize->add_setting('al_contact_subtitle', [
+    'default' => "Ready to transform your business? We'd love to hear from you. Fill out the form below or book a consultation directly.",
+    'sanitize_callback' => 'sanitize_textarea_field',
+  ]);
+  $wp_customize->add_control('al_contact_subtitle', [
+    'label' => __('Hero Subtitle', 'avid-learner'),
+    'section' => 'al_contact_page',
+    'type' => 'textarea',
+  ]);
+
+  // FORM TITLE
+  $wp_customize->add_setting('al_contact_form_title', [
+    'default' => 'Send us a message',
+    'sanitize_callback' => 'sanitize_text_field',
+  ]);
+  $wp_customize->add_control('al_contact_form_title', [
+    'label' => __('Form Title', 'avid-learner'),
+    'section' => 'al_contact_page',
+    'type' => 'text',
+  ]);
+
+  // CF7 SHORTCODE
+  $wp_customize->add_setting('al_contact_cf7_shortcode', [
+    'default' => '[contact-form-7 id="123" title="Contact Form"]',
+    'sanitize_callback' => 'wp_kses_post',
+  ]);
+  $wp_customize->add_control('al_contact_cf7_shortcode', [
+    'label' => __('Contact Form 7 Shortcode', 'avid-learner'),
+    'section' => 'al_contact_page',
+    'type' => 'text',
+    'description' => __('Paste CF7 shortcode. Example: [contact-form-7 id="123" title="Contact Form"]', 'avid-learner'),
+  ]);
+
+  // RIGHT CARD
+  $wp_customize->add_setting('al_contact_call_title', [
+    'default' => 'Prefer to talk directly?',
+    'sanitize_callback' => 'sanitize_text_field',
+  ]);
+  $wp_customize->add_control('al_contact_call_title', [
+    'label' => __('Call Card Title', 'avid-learner'),
+    'section' => 'al_contact_page',
+    'type' => 'text',
+  ]);
+
+  $wp_customize->add_setting('al_contact_call_text', [
+    'default' => 'Book a free 30-minute consultation with one of our experts.',
+    'sanitize_callback' => 'sanitize_textarea_field',
+  ]);
+  $wp_customize->add_control('al_contact_call_text', [
+    'label' => __('Call Card Text', 'avid-learner'),
+    'section' => 'al_contact_page',
+    'type' => 'textarea',
+  ]);
+
+  $wp_customize->add_setting('al_contact_call_btn', [
+    'default' => 'Schedule a Call',
+    'sanitize_callback' => 'sanitize_text_field',
+  ]);
+  $wp_customize->add_control('al_contact_call_btn', [
+    'label' => __('Call Button Text', 'avid-learner'),
+    'section' => 'al_contact_page',
+    'type' => 'text',
+  ]);
+
+  $wp_customize->add_setting('al_contact_call_url', [
+    'default' => '/book',
+    'sanitize_callback' => 'esc_url_raw',
+  ]);
+  $wp_customize->add_control('al_contact_call_url', [
+    'label' => __('Call Button URL (relative or full)', 'avid-learner'),
+    'section' => 'al_contact_page',
+    'type' => 'text',
+    'description' => __('Example: /book or https://calendly.com/yourname/30min', 'avid-learner'),
+  ]);
+
+  // CONTACT INFO
+  $wp_customize->add_setting('al_contact_email', [
+    'default' => 'hello@apexconsult.com',
+    'sanitize_callback' => 'sanitize_email',
+  ]);
+  $wp_customize->add_control('al_contact_email', [
+    'label' => __('Contact Email', 'avid-learner'),
+    'section' => 'al_contact_page',
+    'type' => 'text',
+  ]);
+
+  $wp_customize->add_setting('al_contact_phone', [
+    'default' => '+1 (234) 567-890',
+    'sanitize_callback' => 'sanitize_text_field',
+  ]);
+  $wp_customize->add_control('al_contact_phone', [
+    'label' => __('Contact Phone', 'avid-learner'),
+    'section' => 'al_contact_page',
+    'type' => 'text',
+  ]);
+
+  $wp_customize->add_setting('al_contact_address1', [
+    'default' => '123 Business Ave, Suite 500',
+    'sanitize_callback' => 'sanitize_text_field',
+  ]);
+  $wp_customize->add_control('al_contact_address1', [
+    'label' => __('Address Line 1', 'avid-learner'),
+    'section' => 'al_contact_page',
+    'type' => 'text',
+  ]);
+
+  $wp_customize->add_setting('al_contact_address2', [
+    'default' => 'New York, NY 10001',
+    'sanitize_callback' => 'sanitize_text_field',
+  ]);
+  $wp_customize->add_control('al_contact_address2', [
+    'label' => __('Address Line 2', 'avid-learner'),
+    'section' => 'al_contact_page',
+    'type' => 'text',
+  ]);
+
+  // SOCIAL LINKS
+  $wp_customize->add_setting('al_contact_social_linkedin', [
+    'default' => '#',
+    'sanitize_callback' => 'esc_url_raw',
+  ]);
+  $wp_customize->add_control('al_contact_social_linkedin', [
+    'label' => __('LinkedIn URL', 'avid-learner'),
+    'section' => 'al_contact_page',
+    'type' => 'text',
+  ]);
+
+  $wp_customize->add_setting('al_contact_social_twitter', [
+    'default' => '#',
+    'sanitize_callback' => 'esc_url_raw',
+  ]);
+  $wp_customize->add_control('al_contact_social_twitter', [
+    'label' => __('Twitter/X URL', 'avid-learner'),
+    'section' => 'al_contact_page',
+    'type' => 'text',
+  ]);
+
+  $wp_customize->add_setting('al_contact_social_facebook', [
+    'default' => '#',
+    'sanitize_callback' => 'esc_url_raw',
+  ]);
+  $wp_customize->add_control('al_contact_social_facebook', [
+    'label' => __('Facebook URL', 'avid-learner'),
+    'section' => 'al_contact_page',
+    'type' => 'text',
+  ]);
+});

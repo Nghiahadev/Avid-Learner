@@ -38,6 +38,10 @@ get_header();
 
   <?php get_template_part('our-approach'); ?>
 
+  <?php get_template_part('stack-cards'); ?>
+
+  <?php get_template_part('industries'); ?>
+
   <?php get_template_part('faq-learning'); ?>
 
   <?php get_template_part('cta-consultation'); ?>

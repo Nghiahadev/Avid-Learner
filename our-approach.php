@@ -26,7 +26,7 @@ for ($i = 1; $i <= 3; $i++) {
   $card_text  = get_theme_mod("al_approach_{$i}_text", '');
 
   // Icon: Customizer upload OR fallback svg
-  $icon_id = (int) get_theme_mod("al_approach_{$i}_icon", 0);
+  $icon_id  = (int) get_theme_mod("al_approach_{$i}_icon", 0);
   $icon_url = $icon_id ? wp_get_attachment_image_url($icon_id, 'full') : '';
 
   if (!$icon_url) {
@@ -39,7 +39,7 @@ for ($i = 1; $i <= 3; $i++) {
   }
 
   // Image: Customizer upload OR fallback jpg
-  $img_id = (int) get_theme_mod("al_approach_{$i}_image", 0);
+  $img_id  = (int) get_theme_mod("al_approach_{$i}_image", 0);
   $img_url = $img_id ? wp_get_attachment_image_url($img_id, 'full') : '';
 
   if (!$img_url) {
@@ -119,7 +119,8 @@ for ($i = 1; $i <= 3; $i++) {
             </div>
 
             <div class="mission-vission-image">
-              <figure class="image-anime">
+              <!-- ✅ Add reveal class (optional) -->
+              <figure class="image-anime reveal">
                 <?php if (!empty($card['image'])) : ?>
                   <img src="<?php echo esc_url($card['image']); ?>" alt="<?php echo esc_attr($card['title']); ?> image">
                 <?php endif; ?>
