@@ -42,6 +42,8 @@ get_header();
 
   <?php get_template_part('industries'); ?>
 
+  <?php get_template_part('services-grid'); ?>
+
   <?php get_template_part('faq-learning'); ?>
 
   <?php get_template_part('cta-consultation'); ?>

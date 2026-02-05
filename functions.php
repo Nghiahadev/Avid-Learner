@@ -1153,3 +1153,308 @@ add_action('customize_register', function ($wp_customize) {
     'type' => 'text',
   ]);
 });
+
+
+/* ======================================================
+   About Us Section
+====================================================== */
+add_action('wp_enqueue_scripts', function () {
+  // Font Awesome
+  wp_enqueue_style(
+    'font-awesome-6',
+    'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css',
+    [],
+    '6.5.1'
+  );
+
+  // Counter animation (simple, lightweight)
+  $js = <<<JS
+(() => {
+  const els = document.querySelectorAll('[data-counter]');
+  if (!els.length) return;
+
+  const animate = (el) => {
+    const end = parseInt(el.getAttribute('data-end') || '0', 10);
+    const suffix = el.getAttribute('data-suffix') || '';
+    const dur = parseInt(el.getAttribute('data-duration') || '1200', 10);
+    const start = 0;
+    const t0 = performance.now();
+
+    const tick = (t) => {
+      const p = Math.min(1, (t - t0) / dur);
+      const val = Math.floor(start + (end - start) * (p * (2 - p)));
+      el.textContent = val.toLocaleString() + suffix;
+      if (p < 1) requestAnimationFrame(tick);
+    };
+    requestAnimationFrame(tick);
+  };
+
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach((e) => {
+      if (e.isIntersecting && !e.target.dataset.did) {
+        e.target.dataset.did = '1';
+        animate(e.target);
+      }
+    });
+  }, { threshold: 0.35 });
+
+  els.forEach(el => io.observe(el));
+})();
+JS;
+
+  wp_register_script('al-counters', '', [], null, true);
+  wp_enqueue_script('al-counters');
+  wp_add_inline_script('al-counters', $js);
+});
+
+
+/* ======================================================
+   Services grid
+====================================================== */
+add_action('customize_register', function ($wp_customize) {
+
+  $wp_customize->add_section('al_services_grid', [
+    'title'       => __('Services Grid', 'avid-learner'),
+    'priority'    => 48,
+    'description' => __('Edit the Services Grid section content and Font Awesome icons.', 'avid-learner'),
+  ]);
+
+  // Section heading
+  $wp_customize->add_setting('al_svc_kicker', [
+    'default'           => 'Our Services',
+    'sanitize_callback' => 'sanitize_text_field',
+  ]);
+  $wp_customize->add_control('al_svc_kicker', [
+    'label'   => __('Kicker (pill text)', 'avid-learner'),
+    'section' => 'al_services_grid',
+    'type'    => 'text',
+  ]);
+
+  $wp_customize->add_setting('al_svc_title', [
+    'default'           => 'Strategic Solutions for Every Challenge',
+    'sanitize_callback' => 'sanitize_text_field',
+  ]);
+  $wp_customize->add_control('al_svc_title', [
+    'label'   => __('Title', 'avid-learner'),
+    'section' => 'al_services_grid',
+    'type'    => 'text',
+  ]);
+
+  $wp_customize->add_setting('al_svc_title_highlight', [
+    'default'           => 'Every Challenge',
+    'sanitize_callback' => 'sanitize_text_field',
+  ]);
+  $wp_customize->add_control('al_svc_title_highlight', [
+    'label'       => __('Title Highlight (gradient words)', 'avid-learner'),
+    'section'     => 'al_services_grid',
+    'type'        => 'text',
+    'description' => __('This will be highlighted in gradient in the title.', 'avid-learner'),
+  ]);
+
+  $wp_customize->add_setting('al_svc_subtitle', [
+    'default'           => 'From strategy to execution, we provide comprehensive consulting services that drive measurable business outcomes.',
+    'sanitize_callback' => 'sanitize_textarea_field',
+  ]);
+  $wp_customize->add_control('al_svc_subtitle', [
+    'label'   => __('Subtitle', 'avid-learner'),
+    'section' => 'al_services_grid',
+    'type'    => 'textarea',
+  ]);
+
+  // Defaults for 6 services
+  $defaults = [
+    1 => [
+      'icon' => 'fa-regular fa-lightbulb',
+      'title' => 'Strategy Consulting',
+      'desc'  => 'Develop comprehensive business strategies that align with your vision and drive sustainable growth.',
+      'url'   => '/services/strategy-consulting',
+      'features' => ['Market Analysis','Competitive Strategy','Business Planning','M&A Advisory'],
+    ],
+    2 => [
+      'icon' => 'fa-solid fa-arrow-trend-up',
+      'title' => 'Growth Marketing',
+      'desc'  => 'Accelerate customer acquisition and revenue growth with data-driven marketing strategies.',
+      'url'   => '/services/growth-marketing',
+      'features' => ['Go-to-Market Strategy','Brand Positioning','Digital Marketing','Performance Analytics'],
+    ],
+    3 => [
+      'icon' => 'fa-solid fa-chart-column',
+      'title' => 'Digital Transformation',
+      'desc'  => 'Modernize your operations with cutting-edge technology and process optimization.',
+      'url'   => '/services/digital-transformation',
+      'features' => ['Technology Roadmap','Process Automation','Cloud Migration','Data Analytics'],
+    ],
+    4 => [
+      'icon' => 'fa-solid fa-people-group',
+      'title' => 'Organizational Development',
+      'desc'  => 'Build high-performing teams and cultures that drive innovation and excellence.',
+      'url'   => '/services/organizational-development',
+      'features' => ['Leadership Development','Change Management','Team Building','Culture Design'],
+    ],
+    5 => [
+      'icon' => 'fa-solid fa-rocket',
+      'title' => 'Innovation Advisory',
+      'desc'  => 'Stay ahead of the curve with innovation strategies and emerging technology insights.',
+      'url'   => '/services/innovation-advisory',
+      'features' => ['Innovation Labs','R&D Strategy','Product Development','Startup Partnerships'],
+    ],
+    6 => [
+      'icon' => 'fa-solid fa-shield-halved',
+      'title' => 'Risk & Compliance',
+      'desc'  => 'Navigate complex regulatory landscapes and build resilient business operations.',
+      'url'   => '/services/risk-compliance',
+      'features' => ['Risk Assessment','Compliance Frameworks','Crisis Management','Business Continuity'],
+    ],
+  ];
+
+  // 6 service blocks
+  for ($i = 1; $i <= 6; $i++) {
+
+    $wp_customize->add_setting("al_svc_{$i}_icon", [
+      'default'           => $defaults[$i]['icon'],
+      'sanitize_callback' => 'sanitize_text_field',
+    ]);
+    $wp_customize->add_control("al_svc_{$i}_icon", [
+      'label'       => sprintf(__('Service %d - Font Awesome icon class', 'avid-learner'), $i),
+      'section'     => 'al_services_grid',
+      'type'        => 'text',
+      'description' => __('Example: fa-solid fa-rocket', 'avid-learner'),
+    ]);
+
+    $wp_customize->add_setting("al_svc_{$i}_title", [
+      'default'           => $defaults[$i]['title'],
+      'sanitize_callback' => 'sanitize_text_field',
+    ]);
+    $wp_customize->add_control("al_svc_{$i}_title", [
+      'label'   => sprintf(__('Service %d - Title', 'avid-learner'), $i),
+      'section' => 'al_services_grid',
+      'type'    => 'text',
+    ]);
+
+    $wp_customize->add_setting("al_svc_{$i}_desc", [
+      'default'           => $defaults[$i]['desc'],
+      'sanitize_callback' => 'sanitize_textarea_field',
+    ]);
+    $wp_customize->add_control("al_svc_{$i}_desc", [
+      'label'   => sprintf(__('Service %d - Description', 'avid-learner'), $i),
+      'section' => 'al_services_grid',
+      'type'    => 'textarea',
+    ]);
+
+    $wp_customize->add_setting("al_svc_{$i}_url", [
+      'default'           => $defaults[$i]['url'],
+      'sanitize_callback' => 'sanitize_text_field',
+    ]);
+    $wp_customize->add_control("al_svc_{$i}_url", [
+      'label'       => sprintf(__('Service %d - Learn More URL', 'avid-learner'), $i),
+      'section'     => 'al_services_grid',
+      'type'        => 'text',
+      'description' => __('Example: /services/strategy-consulting', 'avid-learner'),
+    ]);
+
+    // 4 features
+    for ($f = 1; $f <= 4; $f++) {
+      $wp_customize->add_setting("al_svc_{$i}_feature_{$f}", [
+        'default'           => $defaults[$i]['features'][$f-1] ?? '',
+        'sanitize_callback' => 'sanitize_text_field',
+      ]);
+      $wp_customize->add_control("al_svc_{$i}_feature_{$f}", [
+        'label'   => sprintf(__('Service %d - Feature %d', 'avid-learner'), $i, $f),
+        'section' => 'al_services_grid',
+        'type'    => 'text',
+      ]);
+    }
+  }
+});
+
+add_action('customize_register', function($wp_customize){
+
+  $wp_customize->add_section('al_about_carousel', [
+    'title' => __('About Carousel', 'avid-learner'),
+    'priority' => 55,
+    'description' => __('Upload images and set titles for the About page drag carousel.', 'avid-learner'),
+  ]);
+
+  $wp_customize->add_setting('al_about_carousel_kicker', [
+    'default' => 'Our Story Gallery',
+    'sanitize_callback' => 'sanitize_text_field',
+  ]);
+  $wp_customize->add_control('al_about_carousel_kicker', [
+    'label' => __('Kicker (pill text)', 'avid-learner'),
+    'section' => 'al_about_carousel',
+    'type' => 'text',
+  ]);
+
+  $wp_customize->add_setting('al_about_carousel_title', [
+    'default' => 'Moments that shaped our journey',
+    'sanitize_callback' => 'sanitize_text_field',
+  ]);
+  $wp_customize->add_control('al_about_carousel_title', [
+    'label' => __('Section Title', 'avid-learner'),
+    'section' => 'al_about_carousel',
+    'type' => 'text',
+  ]);
+
+  $wp_customize->add_setting('al_about_carousel_subtitle', [
+    'default' => 'Drag, scroll, or swipe to explore highlights from our work, culture, and milestones.',
+    'sanitize_callback' => 'sanitize_textarea_field',
+  ]);
+  $wp_customize->add_control('al_about_carousel_subtitle', [
+    'label' => __('Section Subtitle', 'avid-learner'),
+    'section' => 'al_about_carousel',
+    'type' => 'textarea',
+  ]);
+
+  // ✅ number of slides (no $items needed)
+  $slide_count = 7;
+
+  for ($i = 1; $i <= $slide_count; $i++) {
+
+    $wp_customize->add_setting("al_about_carousel_{$i}_title", [
+      'default' => "Slide {$i}",
+      'sanitize_callback' => 'sanitize_text_field',
+    ]);
+    $wp_customize->add_control("al_about_carousel_{$i}_title", [
+      'label' => sprintf(__('Slide %d Title', 'avid-learner'), $i),
+      'section' => 'al_about_carousel',
+      'type' => 'text',
+    ]);
+
+    $wp_customize->add_setting("al_about_carousel_{$i}_image", [
+      'default' => 0,
+      'sanitize_callback' => 'absint',
+    ]);
+
+    $wp_customize->add_control(
+      new WP_Customize_Media_Control(
+        $wp_customize,
+        "al_about_carousel_{$i}_image",
+        [
+          'label' => sprintf(__('Slide %d Image', 'avid-learner'), $i),
+          'section' => 'al_about_carousel',
+          'mime_type' => 'image',
+        ]
+      )
+    );
+  }
+});
+add_action('wp_enqueue_scripts', function () {
+  wp_enqueue_script(
+    'al-about-carousel',
+    get_template_directory_uri() . '/assets/js/about-carousel.js',
+    [],
+    '1.0.0',
+    true
+  );
+});
+
+
+add_action('wp_enqueue_scripts', function () {
+  wp_enqueue_script(
+    'al-timeline-reveal',
+    get_template_directory_uri() . '/assets/js/timeline-reveal.js',
+    [],
+    '1.0.0',
+    true
+  );
+});

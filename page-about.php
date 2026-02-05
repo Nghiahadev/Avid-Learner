@@ -34,6 +34,7 @@ get_header();
     the_content();
   endwhile;
   ?>
+
       <!-- =====================================================
        ELEMENTOR EDITABLE AREA
        (Add sections in Elementor Editor for the Home page)
@@ -48,6 +49,10 @@ get_header();
     <!-- =====================================================
        CTA Consultation 
   ====================================================== -->
+  <?php get_template_part('about-values'); ?>
+  <?php get_template_part('about-carousel'); ?>
+  <?php get_template_part('about-cta-credentials'); ?>
+  <?php get_template_part('about-timeline'); ?>
   <?php get_template_part('cta-consultation'); ?>
 </main>
 
