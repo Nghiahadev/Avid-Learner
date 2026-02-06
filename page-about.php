@@ -49,6 +49,7 @@ get_header();
     <!-- =====================================================
        CTA Consultation 
   ====================================================== -->
+  <?php get_template_part('about-us'); ?>
   <?php get_template_part('about-values'); ?>
   <?php get_template_part('about-carousel'); ?>
   <?php get_template_part('about-cta-credentials'); ?>

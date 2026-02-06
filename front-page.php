@@ -196,6 +196,9 @@ get_header();
     <?php get_template_part('cta'); ?>
 
     <?php get_template_part('process'); ?>
+
+    <?php get_template_part('logo-marquee'); ?>
+
   <!-- =====================================================
        ELEMENTOR EDITABLE AREA
        (Add sections in Elementor Editor for the Home page)

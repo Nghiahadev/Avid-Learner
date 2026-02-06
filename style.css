@@ -4165,3 +4165,318 @@ h1,h2,h3,h4,h5,h6{
 .al-carousel__wrap { pointer-events: auto; }
 .al-carousel__item { pointer-events: auto; }
 .al-carousel{ touch-action: pan-y; }
+
+/* ========== Logo Marquee ========== */
+.al-logo-marquee {
+  /* keep same theme vibe */
+  padding: 36px 0;
+  background: transparent;
+}
+
+.al-logo-marquee .al-wrap {
+  overflow: hidden;
+}
+
+.al-marquee-row {
+  position: relative;
+  overflow: hidden;
+  margin: 14px 0;
+}
+
+.al-marquee-track {
+  display: flex;
+  width: max-content;
+  will-change: transform;
+  animation: alMarquee var(--al-marquee-speed, 28s) linear infinite;
+}
+
+.al-marquee-row.is-reverse .al-marquee-track {
+  animation-name: alMarqueeReverse;
+}
+
+.al-marquee-group {
+  display: flex;
+  gap: 18px;
+  padding-right: 18px;
+}
+
+.al-logo-card {
+  flex: 0 0 auto;
+  width: 170px;
+  height: 76px;
+  border-radius: 14px;
+  background: rgba(0,0,0,0.06); /* similar soft tile */
+  display: grid;
+  place-items: center;
+  padding: 14px;
+}
+
+.al-logo-img {
+  max-width: 100%;
+  max-height: 44px;
+  width: auto;
+  height: auto;
+  display: block;
+
+  /* if your logos are blue like screenshot */
+  /* If your images are already blue, remove filter */
+  /* filter: saturate(1.2); */
+}
+
+.al-logo-link { display: grid; place-items: center; width: 100%; height: 100%; }
+
+@keyframes alMarquee {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+@keyframes alMarqueeReverse {
+  from { transform: translateX(-50%); }
+  to   { transform: translateX(0); }
+}
+
+/* pause on hover (nice UX) */
+.al-marquee-row:hover .al-marquee-track {
+  animation-play-state: paused;
+}
+
+/* accessibility */
+@media (prefers-reduced-motion: reduce) {
+  .al-marquee-track { animation: none; }
+}
+
+
+/* ===== About (Consulting layout) ===== */
+.al-about { padding: 90px 0; }
+.al-about .al-wrap { max-width: 1180px; margin: 0 auto; padding: 0 18px; }
+
+.al-about-grid{
+  display: grid;
+  grid-template-columns: 520px 1fr;
+  gap: 60px;
+  align-items: start;
+}
+
+/* LEFT images */
+.al-about-images{
+  position: relative;
+  width: 520px;
+  min-height: 560px;
+}
+
+.al-about-img{
+  border-radius: 22px;
+  overflow: hidden;
+  background: rgba(0,0,0,.05);
+  box-shadow: 0 18px 40px rgba(0,0,0,.08);
+}
+
+.al-about-img img{
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+}
+
+.al-img-1{
+  width: 360px;
+  height: 420px;
+  border-radius: 26px;
+}
+
+.al-img-2{
+  width: 340px;
+  height: 320px;
+  position: absolute;
+  left: 160px;
+  top: 260px;
+  border-radius: 26px;
+}
+
+/* rotating circle */
+.al-about-circle{
+  position: absolute;
+  left: 380px;
+  top: 70px;
+  transform: translateX(-50%);
+  width: 150px;
+  height: 150px;
+  animation: alSpin 30s linear infinite;
+}
+.al-about-circle img{ width: 100%; height: 100%; display:block; }
+
+@keyframes alSpin{
+  from{ transform: translateX(-50%) rotate(0deg); }
+  to{ transform: translateX(-50%) rotate(360deg); }
+}
+
+/* dotted pattern */
+.al-about-dots{
+  position: absolute;
+  left: 140px;
+  bottom: 40px;
+  width: 140px;
+  height: 70px;
+  opacity: .9;
+  background-image: radial-gradient(var(--accent-color) 2px, transparent 2px);
+  background-size: 14px 14px;
+  border-radius: 14px;
+}
+
+/* RIGHT content */
+.al-about-kicker{
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 700;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: var(--primary-color);
+  margin-bottom: 12px;
+}
+
+.al-kicker-icon{
+  width: 24px;
+  height: 24px;
+  border-radius: 999px;
+  display: grid;
+  place-items: center;
+  background: var(--accent-color);
+  color: #fff;
+  font-size: 12px;
+}
+.al-kicker-icon i{ font-size: 12px; }
+
+.al-about-title{
+  font-size: clamp(34px, 4.3vw, 52px);
+  line-height: 1.08;
+  margin: 0 0 14px;
+  color: var(--primary-color);
+}
+.al-about-title span{ color: var(--accent-color); }
+
+.al-about-desc{
+  max-width: 560px;
+  font-size: 16px;
+  line-height: 1.9;
+  opacity: .82;
+  margin: 0 0 26px;
+}
+
+/* content blocks row (now just mini + card) */
+.al-about-row{
+  display: grid;
+  grid-template-columns: 1fr 320px;
+  gap: 26px;
+  align-items: start;
+}
+
+/* mini service box */
+.al-about-mini{
+  display: flex;
+  gap: 16px;
+  padding: 18px 0;
+  border-bottom: 1px solid var(--divider-color, rgba(0,0,0,.12));
+}
+
+.al-mini-icon{
+  width: 46px;
+  height: 46px;
+  border-radius: 10px;
+  background: var(--accent-color);
+  display: grid;
+  place-items: center;
+  color: #fff;
+  flex: 0 0 auto;
+}
+.al-mini-icon i{ font-size: 18px; }
+
+.al-mini-body h3{
+  margin: 0 0 6px;
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--primary-color);
+}
+.al-mini-body p{ margin: 0; opacity: .82; line-height: 1.7; }
+
+/* author card */
+.al-about-card{
+  background: var(--secondary-color, rgba(0,0,0,.04));
+  border-radius: 20px;
+  padding: 20px;
+  box-shadow: 0 18px 40px rgba(0,0,0,.06);
+}
+
+.al-card-top{
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 14px;
+}
+
+.al-card-avatar{
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  overflow: hidden;
+  background: rgba(0,0,0,.08);
+  display: grid;
+  place-items: center;
+}
+.al-card-avatar img{ width:100%; height:100%; object-fit:cover; display:block; }
+.al-card-avatar i{ font-size: 16px; opacity: .8; }
+
+.al-card-name{ font-weight: 800; color: var(--primary-color); }
+.al-card-role{ opacity: .75; font-size: 14px; }
+
+.al-card-list{
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 10px;
+}
+.al-card-list li{
+  position: relative;
+  padding-left: 26px;
+  opacity: .85;
+}
+.al-card-list li:before{
+  content: "✓";
+  position: absolute;
+  left: 0;
+  top: 0;
+  color: var(--accent-color);
+  font-weight: 900;
+}
+
+/* placeholder */
+.al-placeholder{
+  width: 100%;
+  height: 100%;
+  min-height: 220px;
+  display: grid;
+  place-items: center;
+  text-align: center;
+  padding: 18px;
+  border-radius: 22px;
+  font-weight: 700;
+  opacity: .7;
+}
+
+/* responsive */
+@media (max-width: 1100px){
+  .al-about-grid{ grid-template-columns: 1fr; }
+  .al-about-images{ width: 100%; max-width: 520px; }
+  .al-about-row{ grid-template-columns: 1fr; }
+  .al-img-2{ left: 120px; }
+  .al-about-circle{ left: 320px; }
+}
+
+@media (max-width: 560px){
+  .al-about-images{ min-height: 520px; }
+  .al-img-1{ width: 100%; height: 360px; }
+  .al-img-2{ width: 78%; left: 22%; top: 240px; height: 290px; }
+  .al-about-circle{ left: 56%; top: 40px; width: 120px; height: 120px; }
+  .al-about-dots{ left: 90px; }
+}

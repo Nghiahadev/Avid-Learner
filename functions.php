@@ -1458,3 +1458,219 @@ add_action('wp_enqueue_scripts', function () {
     true
   );
 });
+
+
+/**
+ * Logo Marquee (Customizer)
+ * - Admin can paste one logo per line (image URL)
+ * - Optional link:  image_url|https://link.com
+ */
+add_action('customize_register', function($wp_customize){
+
+  $wp_customize->add_section('al_logo_marquee', [
+    'title'    => __('Logo Marquee', 'avid-learner'),
+    'priority' => 45,
+  ]);
+
+  $wp_customize->add_setting('al_logo_marquee_enabled', [
+    'default'           => true,
+    'sanitize_callback' => function($v){ return (bool)$v; },
+  ]);
+
+  $wp_customize->add_control('al_logo_marquee_enabled', [
+    'type'    => 'checkbox',
+    'section' => 'al_logo_marquee',
+    'label'   => __('Enable logo marquee', 'avid-learner'),
+  ]);
+
+  $wp_customize->add_setting('al_logo_marquee_logos', [
+    'default'           => "",
+    'sanitize_callback' => 'wp_kses_post',
+  ]);
+
+  $wp_customize->add_control('al_logo_marquee_logos', [
+    'type'        => 'textarea',
+    'section'     => 'al_logo_marquee',
+    'label'       => __('Logos (one per line)', 'avid-learner'),
+    'description' => __("Paste one logo image URL per line.\nOptional link format: image_url|https://example.com", 'avid-learner'),
+  ]);
+
+  $wp_customize->add_setting('al_logo_marquee_speed', [
+    'default'           => 28,
+    'sanitize_callback' => function($v){
+      $v = intval($v);
+      if ($v < 10) $v = 10;
+      if ($v > 120) $v = 120;
+      return $v;
+    },
+  ]);
+
+  $wp_customize->add_control('al_logo_marquee_speed', [
+    'type'        => 'number',
+    'section'     => 'al_logo_marquee',
+    'label'       => __('Animation speed (seconds)', 'avid-learner'),
+    'input_attrs' => ['min' => 10, 'max' => 120, 'step' => 1],
+  ]);
+
+});
+
+
+/**
+ * About Us Section - Customizer Settings (Consulting version)
+ */
+add_action('customize_register', function($wp_customize){
+
+  // Section
+  $wp_customize->add_section('al_about_us', [
+    'title'    => __('About Us', 'avid-learner'),
+    'priority' => 35,
+  ]);
+
+  // Enable toggle
+  $wp_customize->add_setting('al_about_enabled', [
+    'default'           => true,
+    'sanitize_callback' => function($v){ return (bool)$v; },
+  ]);
+  $wp_customize->add_control('al_about_enabled', [
+    'type'    => 'checkbox',
+    'section' => 'al_about_us',
+    'label'   => __('Enable About Us section', 'avid-learner'),
+  ]);
+
+  // Images
+  $wp_customize->add_setting('al_about_img_1', [
+    'default'           => '',
+    'sanitize_callback' => 'esc_url_raw',
+  ]);
+  $wp_customize->add_control(new WP_Customize_Image_Control($wp_customize, 'al_about_img_1', [
+    'label'   => __('About Image 1', 'avid-learner'),
+    'section' => 'al_about_us',
+  ]));
+
+  $wp_customize->add_setting('al_about_img_2', [
+    'default'           => '',
+    'sanitize_callback' => 'esc_url_raw',
+  ]);
+  $wp_customize->add_control(new WP_Customize_Image_Control($wp_customize, 'al_about_img_2', [
+    'label'   => __('About Image 2', 'avid-learner'),
+    'section' => 'al_about_us',
+  ]));
+
+  $wp_customize->add_setting('al_about_circle_img', [
+    'default'           => '',
+    'sanitize_callback' => 'esc_url_raw',
+  ]);
+  $wp_customize->add_control(new WP_Customize_Image_Control($wp_customize, 'al_about_circle_img', [
+    'label'       => __('Circle Image (SVG)', 'avid-learner'),
+    'description' => __('Rotating circle image shown between photos.', 'avid-learner'),
+    'section'     => 'al_about_us',
+  ]));
+
+  // Text content
+  $wp_customize->add_setting('al_about_kicker', [
+    'default'           => 'ABOUT US',
+    'sanitize_callback' => 'sanitize_text_field',
+  ]);
+  $wp_customize->add_control('al_about_kicker', [
+    'type'    => 'text',
+    'section' => 'al_about_us',
+    'label'   => __('Small heading (kicker)', 'avid-learner'),
+  ]);
+
+  // Allow <span> for accent color on part of title
+  $wp_customize->add_setting('al_about_title', [
+    'default'           => 'Trusted guidance for <span>business growth</span>',
+    'sanitize_callback' => 'wp_kses_post',
+  ]);
+  $wp_customize->add_control('al_about_title', [
+    'type'        => 'textarea',
+    'section'     => 'al_about_us',
+    'label'       => __('Main heading (HTML allowed: <span>)', 'avid-learner'),
+    'description' => __('Example: Trusted guidance for <span>business growth</span>', 'avid-learner'),
+  ]);
+
+  $wp_customize->add_setting('al_about_desc', [
+    'default'           => 'We partner with teams to clarify strategy, strengthen execution, and deliver measurable results. Our approach blends structured analysis, practical insight, and hands-on support tailored to your goals.',
+    'sanitize_callback' => 'wp_kses_post',
+  ]);
+  $wp_customize->add_control('al_about_desc', [
+    'type'    => 'textarea',
+    'section' => 'al_about_us',
+    'label'   => __('Description', 'avid-learner'),
+  ]);
+
+  // Service mini box (Consulting)
+  $wp_customize->add_setting('al_about_service_title', [
+    'default'           => 'Strategic Advisory',
+    'sanitize_callback' => 'sanitize_text_field',
+  ]);
+  $wp_customize->add_control('al_about_service_title', [
+    'type'    => 'text',
+    'section' => 'al_about_us',
+    'label'   => __('Service box title', 'avid-learner'),
+  ]);
+
+  $wp_customize->add_setting('al_about_service_desc', [
+    'default'           => 'Clear, data-informed guidance to improve decision-making, optimize operations, and support long-term growth.',
+    'sanitize_callback' => 'wp_kses_post',
+  ]);
+  $wp_customize->add_control('al_about_service_desc', [
+    'type'    => 'textarea',
+    'section' => 'al_about_us',
+    'label'   => __('Service box description', 'avid-learner'),
+  ]);
+
+  // Font Awesome icon class (instead of image icon)
+  $wp_customize->add_setting('al_about_service_fa', [
+    'default'           => 'fa-solid fa-briefcase',
+    'sanitize_callback' => 'sanitize_text_field',
+  ]);
+  $wp_customize->add_control('al_about_service_fa', [
+    'type'        => 'text',
+    'section'     => 'al_about_us',
+    'label'       => __('Service icon (Font Awesome classes)', 'avid-learner'),
+    'description' => __('Example: fa-solid fa-briefcase  |  fa-solid fa-chart-line  |  fa-solid fa-layer-group', 'avid-learner'),
+  ]);
+
+  // Author card
+  $wp_customize->add_setting('al_about_author_photo', [
+    'default'           => '',
+    'sanitize_callback' => 'esc_url_raw',
+  ]);
+  $wp_customize->add_control(new WP_Customize_Image_Control($wp_customize, 'al_about_author_photo', [
+    'label'   => __('Author photo', 'avid-learner'),
+    'section' => 'al_about_us',
+  ]));
+
+  $wp_customize->add_setting('al_about_author_name', [
+    'default'           => 'Kimberly',
+    'sanitize_callback' => 'sanitize_text_field',
+  ]);
+  $wp_customize->add_control('al_about_author_name', [
+    'type'    => 'text',
+    'section' => 'al_about_us',
+    'label'   => __('Author name', 'avid-learner'),
+  ]);
+
+  $wp_customize->add_setting('al_about_author_title', [
+    'default'           => 'Co. Founder',
+    'sanitize_callback' => 'sanitize_text_field',
+  ]);
+  $wp_customize->add_control('al_about_author_title', [
+    'type'    => 'text',
+    'section' => 'al_about_us',
+    'label'   => __('Author title', 'avid-learner'),
+  ]);
+
+  // Checklist (one per line)
+  $wp_customize->add_setting('al_about_checks', [
+    'default'           => "Strategy & Roadmaps\nClear Communication\nOngoing Support",
+    'sanitize_callback' => 'wp_kses_post',
+  ]);
+  $wp_customize->add_control('al_about_checks', [
+    'type'    => 'textarea',
+    'section' => 'al_about_us',
+    'label'   => __('Checklist items (one per line)', 'avid-learner'),
+  ]);
+
+});
